@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  WatchListViewController.swift
 //  stocks-clone
 //
 //  Created by Nozhan Amiri on 4/30/22.
