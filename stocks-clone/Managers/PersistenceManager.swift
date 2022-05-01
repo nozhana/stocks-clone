@@ -8,7 +8,7 @@
 import Foundation
 
 final class PersistenceManager {
-    /// Singleton of parent class
+    /// Singleton of `PersistenceManager`
     static let shared = PersistenceManager()
     
     /// Shared instance of `UserDefaults`
