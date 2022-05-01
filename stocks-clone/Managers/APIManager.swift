@@ -11,10 +11,6 @@ import Foundation
 ///
 /// **Properties**
 /// - ``shared`` is instance of ``APIManager``
-/// - `Struct Constants` holds `apiKey`, `sandboxApiKey`, `baseURL`
-///
-/// **Methods**
-///
 final class APIManager {
 //    MARK: - Properties
     
@@ -64,7 +60,7 @@ final class APIManager {
     ///   - endpoint: An endpoint to unpack of type `Endpoint` enum
     ///   - queryParams: Defaults to empty dictionary
     /// - Returns: `URL` Optional type
-    private func url(
+    private func url (
         for endpoint: Endpoint,
         queryParams: [String: String] = [:]
     ) -> URL? {
@@ -81,16 +77,18 @@ final class APIManager {
     ///   - expecting: Will hold expected value after decoded by `JSONDecoder().decode`
     ///   - completion: Closure that takes `Result` of `.success` or `.failure`
     ///   with appropriately decoded result or an error as parameter. Returns nothing
-    private func request<T: Codable>(
+    private func request<T: Codable> (
         url: URL?,
         expecting: T.Type,
         completion: @escaping (Result<T, Error>) -> Void
     ) {
+//        MARK: Check URL
         guard let url = url else {
             completion(.failure(APIError.invalidURL))
             return
         }
         
+//        MARK: Create task
 //        Create a task with data and responded error. We don't care about the response.
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
 //            Check if data exists and there's no error, otherwise pass the error to completion as failure.
