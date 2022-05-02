@@ -14,6 +14,7 @@ class WatchListViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupSearchController()
+        setupTitle()
     }
     
 //    MARK: - Private
@@ -22,6 +23,11 @@ class WatchListViewController: UIViewController {
         let searchVC = UISearchController(searchResultsController: resultsVC)
         searchVC.searchResultsUpdater = self
         navigationItem.searchController = searchVC
+    }
+    
+    private func setupTitle () {
+        title = "Stocks"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
 
