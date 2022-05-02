@@ -9,12 +9,14 @@ import UIKit
 
 class WatchListViewController: UIViewController {
 
+//    MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupSearchController()
     }
     
+//    MARK: - Private
     private func setupSearchController () {
         let resultsVC = SearchResultsViewController()
         let searchVC = UISearchController(searchResultsController: resultsVC)
