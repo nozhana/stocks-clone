@@ -60,7 +60,7 @@ final class APIManager {
     ///   - endpoint: An endpoint to unpack of type `Endpoint` enum
     ///   - queryParams: Defaults to empty dictionary
     /// - Returns: `URL` Optional type
-    private func url (
+    private func url(
         for endpoint: Endpoint,
         queryParams: [String: String] = [:]
     ) -> URL? {
@@ -77,7 +77,7 @@ final class APIManager {
     ///   - expecting: Will hold expected value after decoded by `JSONDecoder().decode`
     ///   - completion: Closure that takes `Result` of `.success` or `.failure`
     ///   with appropriately decoded result or an error as parameter. Returns nothing
-    private func request<T: Codable> (
+    private func request<T: Codable>(
         url: URL?,
         expecting: T.Type,
         completion: @escaping (Result<T, Error>) -> Void

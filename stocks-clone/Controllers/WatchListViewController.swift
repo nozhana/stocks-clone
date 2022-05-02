@@ -18,14 +18,14 @@ class WatchListViewController: UIViewController {
     }
     
 //    MARK: - Private
-    private func setupSearchController () {
+    private func setupSearchController() {
         let resultsVC = SearchResultsViewController()
         let searchVC = UISearchController(searchResultsController: resultsVC)
         searchVC.searchResultsUpdater = self
         navigationItem.searchController = searchVC
     }
     
-    private func setupTitle () {
+    private func setupTitle() {
         title = "Stocks"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
