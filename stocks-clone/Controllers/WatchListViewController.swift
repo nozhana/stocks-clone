@@ -42,8 +42,10 @@ extension WatchListViewController: UISearchResultsUpdating {
               !query.trimmingCharacters(in: .whitespaces).isEmpty
         else { return }
         
-//        TODO: Reduce API calls to when user finishes typing
+//        TODO: Optimize to reduce calls to when user finishes typing
         print(query)
+        
+//        TODO: Call API to search
         
 //        TODO: Update results controller after search
         
