@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchResultsViewControllerDelegate: AnyObject {
-    func searchResultsViewControllerDidSelect(searchResult: String)
+    func searchResultsViewControllerDidSelect(result: String)
 }
 
 //MARK: -
@@ -79,7 +79,7 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 //        TODO: Pass real stock from API
-        delegate?.searchResultsViewControllerDidSelect(searchResult: "AAPL")
+        delegate?.searchResultsViewControllerDidSelect(result: "AAPL")
     }
     
     
