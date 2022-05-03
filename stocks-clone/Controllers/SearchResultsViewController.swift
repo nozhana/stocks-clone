@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol SearchResultsViewControllerDelegate: AnyObject {
+    func searchResultsViewControllerDidSelect(searchResult: String)
+}
+
 class SearchResultsViewController: UIViewController {
+    
+    weak var delegate: SearchResultsViewControllerDelegate?
     
 //    MARK: - Properties
 
@@ -60,6 +66,12 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
         
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+//        TODO: Pass real stock from API
+        delegate?.searchResultsViewControllerDidSelect(searchResult: "AAPL")
     }
     
     
