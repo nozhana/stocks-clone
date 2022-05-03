@@ -16,6 +16,7 @@ class SearchResultsViewController: UIViewController {
     weak var delegate: SearchResultsViewControllerDelegate?
     
 //    MARK: - Properties
+    private var results: [String] = []
 
     private let tableView: UITableView = {
         let table = UITableView()
@@ -44,6 +45,13 @@ class SearchResultsViewController: UIViewController {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+//    MARK: - Public
+    
+    public func update(with results: [String]) {
+        self.results = results
+        tableView.reloadData()
     }
     
 }

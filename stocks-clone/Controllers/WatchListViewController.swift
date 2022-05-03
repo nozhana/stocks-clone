@@ -48,6 +48,7 @@ extension WatchListViewController: UISearchResultsUpdating {
 //        TODO: Call API to search
         
 //        TODO: Update results controller after search
+        resultsVC.update(with: ["GOOG"])
         
     }
 }
