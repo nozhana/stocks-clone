@@ -11,11 +11,11 @@ protocol SearchResultsViewControllerDelegate: AnyObject {
     func searchResultsViewControllerDidSelect(searchResult: String)
 }
 
+//MARK: -
 class SearchResultsViewController: UIViewController {
     
     weak var delegate: SearchResultsViewControllerDelegate?
     
-//    MARK: - Properties
     private var results: [String] = []
 
     private let tableView: UITableView = {
