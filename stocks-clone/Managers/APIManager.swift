@@ -19,9 +19,9 @@ final class APIManager {
     
     /// Holds `apiKey`, `sandboxApiKey`, `baseURL`
     private struct Constants {
-        static let apiKey = ""
-        static let sandboxApiKey = ""
-        static let baseURL = ""
+        static let apiKey = "c9opsuaad3idb416ln9g"
+        static let sandboxApiKey = "sandbox_c9opsuaad3idb416lna0"
+        static let baseURL = "https://finnhub.io/api/v1/"
     }
     
     private init () {}
@@ -31,6 +31,21 @@ final class APIManager {
 //    Get stock info
     
 //    Search stocks
+    
+    public func search(
+        query: String,
+        completion: @escaping (Result<[String], Error>) -> Void
+    ) {
+        guard let url = url(
+            for: .search,
+            queryParams: ["q": query]
+        ) else {
+            return
+        }
+        
+        print(url.absoluteURL)
+        
+    }
     
 //    MARK: - Private
     
@@ -64,9 +79,23 @@ final class APIManager {
         for endpoint: Endpoint,
         queryParams: [String: String] = [:]
     ) -> URL? {
-//        TODO: Generate url for endpoints
+        var urlString = Constants.baseURL + endpoint.rawValue
         
-        return nil
+        var queryItems: [URLQueryItem] = []
+        
+        for (name, value) in queryParams {
+            queryItems.append(.init(name: name, value: value))
+        }
+        
+        queryItems.append(.init(name: "token", value: Constants.apiKey))
+        
+        let queryString = queryItems.map { item in
+            "\(item.name)=\(item.value ?? "")"
+        }.joined(separator: "&")
+        
+        urlString += "?" + queryString
+        
+        return URL(string: urlString)
     }
     
     /// Perform a URL request given the parameters below.
