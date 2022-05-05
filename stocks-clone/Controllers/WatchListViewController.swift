@@ -63,7 +63,7 @@ extension WatchListViewController: UISearchResultsUpdating {
 }
 
 extension WatchListViewController: SearchResultsViewControllerDelegate {
-    func searchResultsViewControllerDidSelect(result: String) {
+    func searchResultsViewControllerDidSelect(result: SearchResult) {
 //        TODO: Present stock details for selection
     }
 }
