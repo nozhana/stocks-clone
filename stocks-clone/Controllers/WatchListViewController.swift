@@ -65,5 +65,6 @@ extension WatchListViewController: UISearchResultsUpdating {
 extension WatchListViewController: SearchResultsViewControllerDelegate {
     func searchResultsViewControllerDidSelect(result: SearchResult) {
 //        TODO: Present stock details for selection
+        print("Did select: \(result.displaySymbol)")
     }
 }
