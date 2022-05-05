@@ -46,9 +46,18 @@ extension WatchListViewController: UISearchResultsUpdating {
         print(query)
         
 //        TODO: Call API to search
+        APIManager.shared.search(query: query) { result in
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    resultsVC.update(with: response.result)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
         
 //        TODO: Update results controller after search
-        resultsVC.update(with: ["GOOG"])
         
     }
 }
