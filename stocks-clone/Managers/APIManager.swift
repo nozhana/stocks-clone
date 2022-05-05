@@ -34,16 +34,16 @@ final class APIManager {
     
     public func search(
         query: String,
-        completion: @escaping (Result<[String], Error>) -> Void
+        completion: @escaping (Result<SearchResponse, Error>) -> Void
     ) {
-        guard let url = url(
-            for: .search,
-            queryParams: ["q": query]
-        ) else {
-            return
-        }
-        
-        print(url.absoluteURL)
+        request(
+            url: url(
+                for: .search,
+                queryParams: ["q": query]
+            ),
+            expecting: SearchResponse.self,
+            completion: completion
+        )
         
     }
     

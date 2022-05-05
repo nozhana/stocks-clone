@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		316AC50128240B9F00BD3A25 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316AC50028240B9F00BD3A25 /* SearchResponse.swift */; };
 		31884C6A2820366D00463C0B /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31884C692820366D00463C0B /* SearchResultsTableViewCell.swift */; };
 		31A436BC281D6C8800EE3F22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A436BB281D6C8800EE3F22 /* AppDelegate.swift */; };
 		31A436BE281D6C8800EE3F22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A436BD281D6C8800EE3F22 /* SceneDelegate.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		316AC50028240B9F00BD3A25 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		31884C692820366D00463C0B /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		31A436B8281D6C8800EE3F22 /* stocks-clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "stocks-clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31A436BB281D6C8800EE3F22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		31A436CF281D6C9C00EE3F22 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				316AC50028240B9F00BD3A25 /* SearchResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				31A436D6281D6E5200EE3F22 /* TopStoriesNewsViewController.swift in Sources */,
 				31884C6A2820366D00463C0B /* SearchResultsTableViewCell.swift in Sources */,
 				31A436DE281E839100EE3F22 /* PersistenceManager.swift in Sources */,
+				316AC50128240B9F00BD3A25 /* SearchResponse.swift in Sources */,
 				31A436BC281D6C8800EE3F22 /* AppDelegate.swift in Sources */,
 				31A436BE281D6C8800EE3F22 /* SceneDelegate.swift in Sources */,
 				31A436D8281D6E6200EE3F22 /* SearchResultsViewController.swift in Sources */,
