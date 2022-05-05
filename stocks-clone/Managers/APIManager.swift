@@ -117,6 +117,8 @@ final class APIManager {
             return
         }
         
+        print(url.absoluteURL)
+        
 //        MARK: Create task
 //        Create a task with data and responded error. We don't care about the response.
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
