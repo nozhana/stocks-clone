@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchResultsViewControllerDelegate: AnyObject {
-    func searchResultsViewControllerDidSelect(result: String)
+    func searchResultsViewControllerDidSelect(result: SearchResult)
 }
 
 //MARK: -
@@ -16,7 +16,7 @@ class SearchResultsViewController: UIViewController {
     
     weak var delegate: SearchResultsViewControllerDelegate?
     
-    private var results: [String] = []
+    private var results: [SearchResult] = []
 
     private let tableView: UITableView = {
         let table = UITableView()
@@ -49,7 +49,7 @@ class SearchResultsViewController: UIViewController {
     
 //    MARK: - Public
     
-    public func update(with results: [String]) {
+    public func update(with results: [SearchResult]) {
         self.results = results
         tableView.reloadData()
     }
@@ -58,8 +58,7 @@ class SearchResultsViewController: UIViewController {
 
 extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        TODO: Pass real numberOfRows from API
-        10
+        results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,9 +67,10 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
             for: indexPath
         )
         
-//        TODO: Pass real stocks from API
-        cell.textLabel?.text = "AAPL"
-        cell.detailTextLabel?.text = "Apple Inc."
+        let result = results[indexPath.row]
+        
+        cell.textLabel?.text = result.displaySymbol
+        cell.detailTextLabel?.text = result.description
         
         return cell
         
@@ -78,8 +78,9 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        TODO: Pass real stock from API
-        delegate?.searchResultsViewControllerDidSelect(result: "AAPL")
+        
+        let result = results[indexPath.row]
+        delegate?.searchResultsViewControllerDidSelect(result: result)
     }
     
     
