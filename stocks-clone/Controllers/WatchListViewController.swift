@@ -45,7 +45,6 @@ extension WatchListViewController: UISearchResultsUpdating {
 //        TODO: Optimize to reduce calls to when user finishes typing
         print(query)
         
-//        TODO: Call API to search
         APIManager.shared.search(query: query) { result in
             switch result {
             case .success(let response):
@@ -56,8 +55,6 @@ extension WatchListViewController: UISearchResultsUpdating {
                 print(error)
             }
         }
-        
-//        TODO: Update results controller after search
         
     }
 }
