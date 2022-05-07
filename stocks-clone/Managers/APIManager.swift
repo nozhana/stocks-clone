@@ -84,8 +84,8 @@ final class APIManager {
         var queryItems: [URLQueryItem] = []
         
         for (name, value) in queryParams {
-            queryItems.append(.init(name: name,
-                                    value: value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))
+            let safeValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            queryItems.append(.init(name: name, value: safeValue))
         }
         
         queryItems.append(.init(name: "token", value: Constants.apiKey))
