@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import FloatingPanel
 
 class WatchListViewController: UIViewController {
+    
+    private var panelVC: FloatingPanelController?
     
     private var searchTimer: Timer?
 
@@ -17,6 +20,7 @@ class WatchListViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupSearchController()
         setupTitle()
+        setupFloatingPanel()
     }
     
 //    MARK: - Private
@@ -31,6 +35,15 @@ class WatchListViewController: UIViewController {
     private func setupTitle() {
         title = "Stocks"
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func setupFloatingPanel() {
+        let newsVC = TopStoriesNewsViewController()
+        panelVC = FloatingPanelController(delegate: self)
+        panelVC?.surfaceView.backgroundColor = .secondarySystemBackground
+        panelVC?.set(contentViewController: newsVC)
+        panelVC?.track(scrollView: newsVC.tableView)
+        panelVC?.addPanel(toParent: self)
     }
 
 
@@ -75,5 +88,11 @@ extension WatchListViewController: SearchResultsViewControllerDelegate {
     func searchResultsViewControllerDidSelect(result: SearchResult) {
 //        TODO: Present stock details for selection
         print("Did select: \(result.displaySymbol)")
+    }
+}
+
+extension WatchListViewController: FloatingPanelControllerDelegate {
+    func floatingPanelWillBeginAttracting(_ fpc: FloatingPanelController, to state: FloatingPanelState) {
+        navigationController?.setNavigationBarHidden(state == .full, animated: true)
     }
 }
