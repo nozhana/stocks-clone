@@ -21,6 +21,7 @@
 		31A436DC281E835900EE3F22 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A436DB281E835900EE3F22 /* APIManager.swift */; };
 		31A436DE281E839100EE3F22 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A436DD281E839100EE3F22 /* PersistenceManager.swift */; };
 		31A436E0281E83A800EE3F22 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A436DF281E83A800EE3F22 /* HapticsManager.swift */; };
+		31DFC6822829850D006D06D5 /* NewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DFC6812829850D006D06D5 /* NewsHeaderView.swift */; };
 		8B9993FD674D2CE7EC4EB879 /* Pods_stocks_clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1553D65BB0987FD6F518EC69 /* Pods_stocks_clone.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		31A436DB281E835900EE3F22 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		31A436DD281E839100EE3F22 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		31A436DF281E83A800EE3F22 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		31DFC6812829850D006D06D5 /* NewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderView.swift; sourceTree = "<group>"; };
 		9EA62A0C13AAFCD75137F823 /* Pods-stocks-clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-clone.debug.xcconfig"; path = "Target Support Files/Pods-stocks-clone/Pods-stocks-clone.debug.xcconfig"; sourceTree = "<group>"; };
 		CE31788FB04FF93C6241E3B1 /* Pods-stocks-clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-clone.release.xcconfig"; path = "Target Support Files/Pods-stocks-clone/Pods-stocks-clone.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +104,7 @@
 			children = (
 				31A436C6281D6C8900EE3F22 /* LaunchScreen.storyboard */,
 				31884C692820366D00463C0B /* SearchResultsTableViewCell.swift */,
+				31DFC6812829850D006D06D5 /* NewsHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				316AC50128240B9F00BD3A25 /* SearchResponse.swift in Sources */,
 				31A436BC281D6C8800EE3F22 /* AppDelegate.swift in Sources */,
 				314E462F28281DAD00A4FB98 /* Extensions.swift in Sources */,
+				31DFC6822829850D006D06D5 /* NewsHeaderView.swift in Sources */,
 				31A436BE281D6C8800EE3F22 /* SceneDelegate.swift in Sources */,
 				31A436D8281D6E6200EE3F22 /* SearchResultsViewController.swift in Sources */,
 				31A436DC281E835900EE3F22 /* APIManager.swift in Sources */,
