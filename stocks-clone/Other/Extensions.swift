@@ -35,3 +35,13 @@ extension UIView {
         frame.maxY
     }
 }
+
+// MARK: - Add Subviews
+
+extension UIView {
+    func addSubviews (_ views: UIView...) {
+        views.forEach { view in
+            addSubview(view)
+        }
+    }
+}
