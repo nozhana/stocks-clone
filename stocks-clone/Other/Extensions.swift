@@ -45,3 +45,31 @@ extension UIView {
         }
     }
 }
+
+// MARK: - Time Interval
+
+extension TimeInterval {
+    internal static var secondsPerDay: Double {
+        60 * 60 * 24
+    }
+    
+    internal static var secondsPerHour: Double {
+        60 * 60
+    }
+    
+    internal static var secondsPerMinute: Double {
+        60
+    }
+    
+    public static func days(_ n: Double) -> TimeInterval {
+        n * secondsPerDay
+    }
+    
+    public static func hours(_ n: Double) -> TimeInterval {
+        n * secondsPerHour
+    }
+    
+    public static func months(_ n: Double) -> TimeInterval {
+        n * secondsPerDay * 30
+    }
+}

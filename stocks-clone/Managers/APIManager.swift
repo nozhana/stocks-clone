@@ -44,7 +44,42 @@ final class APIManager {
             expecting: SearchResponse.self,
             completion: completion
         )
-        
+    }
+    
+    public func news(
+        for type: NewsViewController.contentType,
+        completion: @escaping (Result<[NewsStory], Error>) -> Void
+    ) {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate]
+                
+        switch type {
+        case .topStories:
+            request(
+                url: url(
+                    for: .marketNews,
+                    queryParams: ["category": "general"]
+                ),
+                expecting: [NewsStory].self,
+                completion: completion
+            )
+        case .companyNews(let symbol):
+            let today = Date()
+            let oneWeekBack = Date(timeIntervalSinceNow: .days(-7))
+
+            request(
+                url: url(
+                    for: .companyNews,
+                    queryParams: [
+                        "symbol": symbol,
+                        "from": formatter.string(from: oneWeekBack),
+                        "to": formatter.string(from: today)
+                    ]
+                ),
+                expecting: [NewsStory].self,
+                completion: completion
+            )
+        }
     }
     
 //    MARK: - Private
@@ -57,6 +92,8 @@ final class APIManager {
     /// - `search`
     private enum Endpoint: String {
         case search
+        case marketNews = "news"
+        case companyNews = "company-news"
     }
     
     /// Various Errors in API
@@ -84,7 +121,9 @@ final class APIManager {
         var queryItems: [URLQueryItem] = []
         
         for (name, value) in queryParams {
-            let safeValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            guard let safeValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+                return nil
+            }
             queryItems.append(.init(name: name, value: safeValue))
         }
         
