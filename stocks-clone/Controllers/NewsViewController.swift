@@ -27,15 +27,15 @@ class NewsViewController: UIViewController {
     
     private var stories: [NewsStory] = [
         NewsStory(
-            category: "technology",
+            category: "",
             datetime: 123,
-            headline: "Some headline should go here!",
+            headline: "Loading...",
             id: 123,
-            image: "https://koenig-media.raywenderlich.com/uploads/2019/03/MVVMDataBinding-feature.png",
+            image: "",
             related: "",
-            source: "CNN Business",
-            summary: "This is an exhaustive summary of this news article",
-            url: "https://google.com/"
+            source: "",
+            summary: "",
+            url: ""
         )
     ]
     
@@ -69,7 +69,7 @@ class NewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
-        fetchContents()
+        fetchNews()
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,8 +85,20 @@ class NewsViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    private func fetchContents() {
-        
+    private func fetchNews() {
+        APIManager.shared.news(for: type) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let stories):
+                DispatchQueue.main.async {
+                    self.stories = stories
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     private func open(url: URL) {
