@@ -8,5 +8,6 @@ target 'stocks-clone' do
   # Pods for stocks-clone
 
   pod 'FloatingPanel'
+  pod 'SDWebImage'
 
 end
