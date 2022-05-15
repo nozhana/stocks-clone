@@ -31,7 +31,7 @@ class NewsViewController: UIViewController {
             datetime: 123,
             headline: "Some headline goes here!",
             id: 123,
-            image: "",
+            image: "https://koenig-media.raywenderlich.com/uploads/2019/03/MVVMDataBinding-feature.png",
             related: "",
             source: "CNN Business",
             summary: "This is an exhaustive summary of this news article",

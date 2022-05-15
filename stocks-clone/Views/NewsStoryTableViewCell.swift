@@ -133,6 +133,6 @@ class NewsStoryTableViewCell: UITableViewCell {
         headlineLabel.text = viewModel.headline
         sourceLabel.text = viewModel.source
         dateLabel.text = viewModel.dateString
-        storyImageView.image = nil
+//        storyImageView.setImage(with: viewModel.imageURL)
     }
 }
