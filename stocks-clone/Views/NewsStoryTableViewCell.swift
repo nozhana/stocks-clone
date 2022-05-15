@@ -85,11 +85,11 @@ class NewsStoryTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let imageSize: CGFloat = contentView.h - 6
+        let imageSize: CGFloat = contentView.h - 18
         
         storyImageView.frame = CGRect(
             x: contentView.w - imageSize - 10,
-            y: 3,
+            y: (contentView.h - imageSize) / 2,
             width: imageSize,
             height: imageSize
         )
