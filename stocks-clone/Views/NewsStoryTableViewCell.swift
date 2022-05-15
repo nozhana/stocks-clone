@@ -43,7 +43,8 @@ class NewsStoryTableViewCell: UITableViewCell {
 //    Headline
     private let headlineLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .regular)
+        label.font = .systemFont(ofSize: 24, weight: .regular)
+        label.numberOfLines = 2
         return label
     }()
     
@@ -51,6 +52,7 @@ class NewsStoryTableViewCell: UITableViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .light)
+        label.textColor = .secondaryLabel
         return label
     }()
     
@@ -61,7 +63,7 @@ class NewsStoryTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 6
         imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .secondarySystemBackground
+        imageView.backgroundColor = .tertiarySystemBackground
         return imageView
     }()
         
@@ -70,8 +72,8 @@ class NewsStoryTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .systemPink
-        backgroundColor = nil
+        contentView.backgroundColor = .secondarySystemBackground
+        backgroundColor = .secondarySystemBackground
         addSubviews(sourceLabel, headlineLabel, dateLabel, storyImageView)
     }
     
@@ -106,7 +108,7 @@ class NewsStoryTableViewCell: UITableViewCell {
             x: separatorInset.left,
             y: sourceLabel.b + 5,
             width: availableWidth,
-            height: contentView.h - sourceLabel.b - dateLabel.h - 10
+            height: contentView.h - sourceLabel.b - dateLabel.h - 15
         )
 
         dateLabel.frame = CGRect(

@@ -29,7 +29,7 @@ class NewsViewController: UIViewController {
         NewsStory(
             category: "technology",
             datetime: 123,
-            headline: "Some headline goes here!",
+            headline: "Some headline should go here!",
             id: 123,
             image: "https://koenig-media.raywenderlich.com/uploads/2019/03/MVVMDataBinding-feature.png",
             related: "",
