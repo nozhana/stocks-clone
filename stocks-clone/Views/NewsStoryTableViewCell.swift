@@ -12,6 +12,11 @@ class NewsStoryTableViewCell: UITableViewCell {
     
     static let preferredHeight: CGFloat = 140
     
+//    static let dateFormatter: DateFormatter = {
+//        let dateFormatter = DateFormatter()
+//        return dateFormatter
+//    }()
+    
     struct ViewModel {
         let source: String
         let headline: String
@@ -21,8 +26,8 @@ class NewsStoryTableViewCell: UITableViewCell {
         init(model: NewsStory) {
             source = model.source
             headline = model.headline
-            dateString = "Jun 21, 2021"
-            imageURL = nil
+            dateString = .prettyDateString(from: model.datetime)
+            imageURL = URL(string: model.image)
         }
     }
     

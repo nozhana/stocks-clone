@@ -50,9 +50,6 @@ final class APIManager {
         for type: NewsViewController.contentType,
         completion: @escaping (Result<[NewsStory], Error>) -> Void
     ) {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withFullDate]
-                
         switch type {
         case .topStories:
             request(
@@ -72,8 +69,8 @@ final class APIManager {
                     for: .companyNews,
                     queryParams: [
                         "symbol": symbol,
-                        "from": formatter.string(from: oneWeekBack),
-                        "to": formatter.string(from: today)
+                        "from": .iso8601DateString(from: oneWeekBack),
+                        "to": .iso8601DateString(from: today)
                     ]
                 ),
                 expecting: [NewsStory].self,
