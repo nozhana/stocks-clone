@@ -30,7 +30,7 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     
     private let button: UIButton = {
         let button = UIButton()
-        button.setTitle("+Watchlist", for: .normal)
+        button.setTitle("+ Watchlist", for: .normal)
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 8
@@ -53,12 +53,15 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = CGRect(x: 14, y: 0, width: contentView.w - 28, height: contentView.h)
+        label.frame = CGRect(x: 16,
+                             y: 0,
+                             width: (contentView.w - button.w - (label.l * 2)),
+                             height: contentView.h)
         
         button.sizeToFit()
-        button.frame = CGRect(x: contentView.w - button.w - 16,
+        button.frame = CGRect(x: contentView.w - button.w - 24,
                               y: (contentView.h - button.h) / 2,
-                              width: button.w + 8,
+                              width: button.w + 16,
                               height: button.h)
     }
     
