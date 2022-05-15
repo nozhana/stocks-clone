@@ -44,7 +44,7 @@ class NewsStoryTableViewCell: UITableViewCell {
     private let headlineLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 24, weight: .regular)
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         return label
     }()
     
@@ -104,18 +104,18 @@ class NewsStoryTableViewCell: UITableViewCell {
             height: sourceLabel.h
         )
         
-        headlineLabel.frame = CGRect(
-            x: separatorInset.left,
-            y: sourceLabel.b + 5,
-            width: availableWidth,
-            height: contentView.h - sourceLabel.b - dateLabel.h - 15
-        )
-
         dateLabel.frame = CGRect(
             x: separatorInset.left,
             y: contentView.h - 40,
             width: availableWidth,
             height: 40
+        )
+
+        headlineLabel.frame = CGRect(
+            x: separatorInset.left,
+            y: sourceLabel.b + 5,
+            width: availableWidth,
+            height: contentView.h - sourceLabel.b - dateLabel.h - 15
         )
 
     }
