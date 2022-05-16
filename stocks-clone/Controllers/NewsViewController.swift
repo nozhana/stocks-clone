@@ -5,6 +5,7 @@
 //  Created by Nozhan Amiri on 4/30/22.
 //
 
+import SafariServices
 import UIKit
 
 class NewsViewController: UIViewController {
@@ -102,10 +103,29 @@ class NewsViewController: UIViewController {
     }
     
     private func open(url: URL) {
+        let config = SFSafariViewController.Configuration()
+        config.entersReaderIfAvailable = true
+        
+        let vc = SFSafariViewController(url: url, configuration: config)
+        present(vc, animated: true)
         
     }
     
+    private func presentFailedToOpenAlert() {
+        let alertVC = UIAlertController(
+            title: "Error",
+            message: "Failed to open webpage.\nPlease try again.",
+            preferredStyle: .alert
+        )
+        
+        alertVC.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+        
+        present(alertVC, animated: true)
+    }
+    
 }
+
+// MARK: - Extensions: Configure tableView
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -148,5 +168,12 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 //        TODO: Open NewsStory
+        let story = stories[indexPath.row]
+        guard let url = URL(string: story.url) else {
+            presentFailedToOpenAlert()
+            return
+        }
+        open(url: url)
     }
+    
 }
