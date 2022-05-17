@@ -16,27 +16,54 @@ final class PersistenceManager {
     
     /// Struct to hold constants across `PersistenceManager`
     private struct Constants {
-        
+        static let hasOnBoardedKey = "hasOnBoarded"
+        static let watchlistKey = "watchlist"
     }
     
     private init() {}
     
 //    MARK: - Public
     
-    public var watchlist: [String] { [] }
+    public var watchlistSymbols: [String] {
+        if !hasOnboarded {
+            userDefaults.set(true, forKey: Constants.hasOnBoardedKey)
+            setupDefaultWatchlist()
+        }
+        return userDefaults.stringArray(forKey: Constants.watchlistKey) ?? []
+    }
     
-    public func addToWatchlist () {
+    public func addToWatchlist() {
         
     }
     
-    public func removeFromWatchlist () {
+    public func removeFromWatchlist() {
         
     }
     
 //    MARK: - Private
     
-    private var hasOnboarded: Bool { false }
+    private var hasOnboarded: Bool {
+        userDefaults.bool(forKey: Constants.hasOnBoardedKey)
+    }
     
-    
+    private func setupDefaultWatchlist() {
+        let watchlistMap = [
+            "AAPL": "Apple Inc.",
+            "MSFT": "Microsoft Corporation",
+            "GOOG": "Alphabet Inc. (Google)",
+            "FB": "Facebook Inc.",
+            "META": "Meta Platforms",
+            "AMZN": "Amazon Inc.",
+            "SNAP": "Snapchat Inc.",
+            "WORK": "Slack Technologies",
+            "NVDA": "NVIDIA Inc.",
+            "NKE": "Nike Inc."
+        ]
+        
+        userDefaults.set(watchlistMap.keys.map { $0 }, forKey: Constants.watchlistKey)
+        for (symbol, name) in watchlistMap {
+            userDefaults.set(name, forKey: symbol)
+        }
+    }
     
 }

@@ -12,18 +12,45 @@ class WatchListViewController: UIViewController {
     
     private var panelVC: FloatingPanelController?
     
+    private var watchlistMap: [String: [String]] = [:]
+    
+//    private let persistenceManager = PersistenceManager.shared
+    
+    private var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(WatchlistTableViewCell.self,
+                           forCellReuseIdentifier: WatchlistTableViewCell.identifier)
+        return tableView
+    }()
+    
     private var searchTimer: Timer?
 
 //    MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .systemBackground
-        setupSearchController()
         setupTitle()
+        setupSearchController()
+        setupTableView()
+        setupWatchlistData()
         setupFloatingPanel()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.frame = view.bounds
+    }
+    
 //    MARK: - Private
+    
+    private func setupTitle() {
+        title = "Stocks"
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
     private func setupSearchController() {
         let resultsVC = SearchResultsViewController()
         resultsVC.delegate = self
@@ -32,9 +59,18 @@ class WatchListViewController: UIViewController {
         navigationItem.searchController = searchVC
     }
     
-    private func setupTitle() {
-        title = "Stocks"
-        navigationController?.navigationBar.prefersLargeTitles = true
+    private func setupTableView() {
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    private func setupWatchlistData() {
+        let symbols = PersistenceManager.shared.watchlistSymbols
+        for symbol in symbols {
+//            TODO: Fetch market data for symbol
+            watchlistMap[symbol] = ["Some string here"]
+        }
     }
     
     private func setupFloatingPanel() {
@@ -45,9 +81,9 @@ class WatchListViewController: UIViewController {
         panelVC?.track(scrollView: newsVC.tableView)
         panelVC?.addPanel(toParent: self)
     }
-
-
 }
+
+// MARK: - Extensions
 
 extension WatchListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
@@ -80,7 +116,6 @@ extension WatchListViewController: UISearchResultsUpdating {
                 }
             }
         })
-        
     }
 }
 
@@ -93,6 +128,29 @@ extension WatchListViewController: SearchResultsViewControllerDelegate {
         let navVC = UINavigationController(rootViewController: detailVC)
         detailVC.title = result.description
         present(navVC, animated: true)
+    }
+}
+
+extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        watchlistMap.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: WatchlistTableViewCell.identifier,
+            for: indexPath
+        )
+        
+        cell.textLabel?.text = watchlistMap.keys[watchlistMap.keys.index(watchlistMap.keys.startIndex, offsetBy: indexPath.row)]
+        cell.detailTextLabel?.text = watchlistMap[cell.textLabel?.text ?? ""]?[0]
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+//        TODO: Open details for selection
     }
 }
 
