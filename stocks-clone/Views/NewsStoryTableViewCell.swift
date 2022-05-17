@@ -13,11 +13,6 @@ class NewsStoryTableViewCell: UITableViewCell {
     
     static let preferredHeight: CGFloat = 140
     
-//    static let dateFormatter: DateFormatter = {
-//        let dateFormatter = DateFormatter()
-//        return dateFormatter
-//    }()
-    
     struct ViewModel {
         let source: String
         let headline: String

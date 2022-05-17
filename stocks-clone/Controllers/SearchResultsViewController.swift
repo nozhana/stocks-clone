@@ -35,7 +35,7 @@ class SearchResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setupTable()
+        setupTableView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,7 +45,7 @@ class SearchResultsViewController: UIViewController {
     
 //    MARK: - Private
     
-    private func setupTable() {
+    private func setupTableView() {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
