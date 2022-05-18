@@ -25,6 +25,7 @@
 		31A436E0281E83A800EE3F22 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A436DF281E83A800EE3F22 /* HapticsManager.swift */; };
 		31DFC6822829850D006D06D5 /* NewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DFC6812829850D006D06D5 /* NewsHeaderView.swift */; };
 		31F78B392833D4AE0052613E /* WatchlistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F78B382833D4AE0052613E /* WatchlistTableViewCell.swift */; };
+		31F78B3B28340C920052613E /* StockCandles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F78B3A28340C920052613E /* StockCandles.swift */; };
 		8B9993FD674D2CE7EC4EB879 /* Pods_stocks_clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1553D65BB0987FD6F518EC69 /* Pods_stocks_clone.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		31A436DF281E83A800EE3F22 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
 		31DFC6812829850D006D06D5 /* NewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderView.swift; sourceTree = "<group>"; };
 		31F78B382833D4AE0052613E /* WatchlistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistTableViewCell.swift; sourceTree = "<group>"; };
+		31F78B3A28340C920052613E /* StockCandles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCandles.swift; sourceTree = "<group>"; };
 		9EA62A0C13AAFCD75137F823 /* Pods-stocks-clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-clone.debug.xcconfig"; path = "Target Support Files/Pods-stocks-clone/Pods-stocks-clone.debug.xcconfig"; sourceTree = "<group>"; };
 		CE31788FB04FF93C6241E3B1 /* Pods-stocks-clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-stocks-clone.release.xcconfig"; path = "Target Support Files/Pods-stocks-clone/Pods-stocks-clone.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +104,7 @@
 			children = (
 				316AC50028240B9F00BD3A25 /* SearchResponse.swift */,
 				31153EB7282AC6D00017C7DA /* NewsStory.swift */,
+				31F78B3A28340C920052613E /* StockCandles.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			files = (
 				31A436E0281E83A800EE3F22 /* HapticsManager.swift in Sources */,
 				31A436DA281D6E6A00EE3F22 /* StockDetailsViewController.swift in Sources */,
+				31F78B3B28340C920052613E /* StockCandles.swift in Sources */,
 				31A436C0281D6C8800EE3F22 /* WatchListViewController.swift in Sources */,
 				31A436D6281D6E5200EE3F22 /* NewsViewController.swift in Sources */,
 				31884C6A2820366D00463C0B /* SearchResultsTableViewCell.swift in Sources */,

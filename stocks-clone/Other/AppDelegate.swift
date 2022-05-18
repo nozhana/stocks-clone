@@ -36,7 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     private func debug() {
-        
+        APIManager.shared.candles(for: "AAPL") { result in
+            switch result {
+            case .success(let candles):
+                print(candles.candleSticks)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
 }

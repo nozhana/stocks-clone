@@ -28,9 +28,28 @@ final class APIManager {
     
 //    MARK: - Public
     
-//    Get stock info
-    
-//    Search stocks
+    public func candles(
+        for symbol: String,
+        numberOfDays: TimeInterval = 7,
+        completion: @escaping (Result<StockCandles, Error>) -> Void
+    ) {
+        let to = Date()
+        let from = to.addingTimeInterval(.days(-numberOfDays))
+        
+        request(
+            url: url(
+                for: .stockCandles,
+                queryParams: [
+                    "symbol": symbol,
+                    "resolution": "D",
+                    "from": "\(Int(from.timeIntervalSince1970))",
+                    "to": "\(Int(to.timeIntervalSince1970))"
+                ]
+            ),
+            expecting: StockCandles.self,
+            completion: completion
+        )
+    }
     
     public func search(
         query: String,
@@ -62,7 +81,7 @@ final class APIManager {
             )
         case .companyNews(let symbol):
             let today = Date()
-            let oneWeekBack = Date(timeIntervalSinceNow: .days(-7))
+            let oneWeekBack = today.addingTimeInterval(.days(-7))
 
             request(
                 url: url(
@@ -86,11 +105,15 @@ final class APIManager {
     /// Extends `String` type.
     ///
     /// **Cases**
-    /// - `search`
+    ///  - `search`
+    ///  - `marketNews`
+    ///  - `companyNews`
+    ///  - `stockCandles`
     private enum Endpoint: String {
         case search
         case marketNews = "news"
         case companyNews = "company-news"
+        case stockCandles = "stock/candle"
     }
     
     /// Various Errors in API
@@ -154,6 +177,7 @@ final class APIManager {
             return
         }
         
+//        Print Called URL
         print(url.absoluteURL)
         
 //        MARK: Create task
