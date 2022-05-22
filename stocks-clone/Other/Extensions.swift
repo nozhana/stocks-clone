@@ -129,3 +129,44 @@ extension UIImageView {
         }
     }
 }
+
+// MARK: - Rounding precision
+
+extension Double {
+    func rounded(to precision: Int) -> Double {
+        let divisor = pow(10.0, Double(precision))
+        return (self * divisor).rounded() / divisor
+    }
+}
+
+// MARK: - Decimal & Percent Number Formatter
+
+extension NumberFormatter {
+    static let decimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = .current
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+    
+    static let percentFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = .current
+        formatter.numberStyle = .percent
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
+}
+
+// MARK: - String from NumberFormatter
+
+extension String {
+    static func decimalFormatted(from double: Double) -> String {
+        NumberFormatter.decimalFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
+    }
+    
+    static func percentFormatted(from double: Double) -> String {
+        NumberFormatter.percentFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
+    }
+}
