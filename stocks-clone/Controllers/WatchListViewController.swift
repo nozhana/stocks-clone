@@ -14,7 +14,7 @@ class WatchListViewController: UIViewController {
     
     private var watchlistMap: [String: [CandleStick]] = [:]
     
-    private var viewModels: [String] = []
+    private var viewModels: [WatchlistTableViewCell.ViewModel] = []
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -89,8 +89,56 @@ class WatchListViewController: UIViewController {
         }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.createViewModels()
             self?.tableView.reloadData()
         }
+    }
+    
+    private func createViewModels() {
+        var viewModels: [WatchlistTableViewCell.ViewModel] = []
+        
+        for (symbol, candleSticks) in watchlistMap {
+            viewModels.append(
+                .init(
+                    symbol: symbol,
+                    company: UserDefaults.standard.string(forKey: symbol) ?? "No name available",
+                    price: .decimalFormatted(from: candleSticks.last?.close ?? 0.0),
+                    change: .decimalFormatted(from: getChange(from: candleSticks)),
+                    changePercentage: .percentFormatted(from: getChangeFraction(from: candleSticks)),
+                    changeColor: getChange(from: candleSticks) < 0 ? .systemRed : .systemGreen
+                )
+            )
+//            #DEBUG: Check if correct data is fetched
+            let lastVM = viewModels.last!
+            print("""
+
+                Symbol: \(lastVM.symbol)
+                Current price: \(lastVM.price)
+                Change: \(lastVM.change)
+                Percent changed: \(lastVM.changePercentage)
+                Change color: \(lastVM.changeColor)
+            """)
+        }
+        
+        self.viewModels = viewModels
+    }
+    
+    private func getChange(from candleSticks: [CandleStick]) -> Double {
+        guard let latestClose = candleSticks.last?.close,
+              let priorClose = candleSticks.dropLast().last?.close
+        else { return 0.0 }
+        
+        let change = latestClose - priorClose
+        return change
+    }
+    
+    private func getChangeFraction(from candleSticks: [CandleStick]) -> Double {
+        guard let latestClose = candleSticks.last?.close,
+              let priorClose = candleSticks.dropLast().last?.close
+        else { return 0.0 }
+        
+        let changeFraction = (latestClose - priorClose) / priorClose
+        return changeFraction
     }
     
     private func setupFloatingPanel() {
@@ -101,6 +149,7 @@ class WatchListViewController: UIViewController {
         panelVC?.track(scrollView: newsVC.tableView)
         panelVC?.addPanel(toParent: self)
     }
+    
 }
 
 // MARK: - Extensions
@@ -157,13 +206,14 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
+        guard let cell = tableView.dequeueReusableCell(
             withIdentifier: WatchlistTableViewCell.identifier,
             for: indexPath
-        )
+        ) as? WatchlistTableViewCell else {
+            fatalError()
+        }
         
-        cell.textLabel?.text = watchlistMap.keys[watchlistMap.keys.index(watchlistMap.keys.startIndex, offsetBy: indexPath.row)]
-        cell.detailTextLabel?.text = watchlistMap[cell.textLabel?.text ?? ""]?[0]
+//        TODO: Configure cell with ViewModel
         
         return cell
     }
