@@ -9,12 +9,11 @@ import Foundation
 
 /// An object that manages and calls the API on the app's behalf.
 ///
-/// **Properties**
-/// - ``shared`` is instance of ``APIManager``
+/// *Singleton* ``shared``
 final class APIManager {
 //    MARK: - Properties
     
-    /// Singleton instance of the class
+    /// Shared instance of ``APIManager``
     static let shared = APIManager()
     
     /// Holds `apiKey`, `sandboxApiKey`, `baseURL`
@@ -24,13 +23,22 @@ final class APIManager {
         static let baseURL = "https://finnhub.io/api/v1/"
     }
     
+    /// The default implementation of this initializer does nothing.
     private init () {}
     
 //    MARK: - Public
     
+    /// Makes a request to `stockCandles` endpoint for a specific symbol.
+    /// The API endpoint is `stock/candles`
+    /// - Parameters:
+    ///   - symbol: A stock symbol `String`. *i.e. –* **AAPL**
+    ///   - numberOfDays: Number of days to get candles from until today as `Double`. Defaults to 7.
+    ///   - completion: Closure of `Result` that holds ``StockCandles`` upon success and `Error` upon failure.
+    ///
+    /// Returns nothing.
     public func candles(
         for symbol: String,
-        numberOfDays: TimeInterval = 7,
+        numberOfDays: Double = 7,
         completion: @escaping (Result<StockCandles, Error>) -> Void
     ) {
         let to = Date()
@@ -51,6 +59,12 @@ final class APIManager {
         )
     }
     
+    /// Makes a request to `search` endpoint for a given query.
+    /// - Parameters:
+    ///   - query: Given query that could comprise of a `symbol` or `displaySymbol`.
+    ///   - completion: Closure of `Result` that holds ``SearchResponse`` upon success and `Error` upon failure.
+    ///
+    ///   Returns nothing.
     public func search(
         query: String,
         completion: @escaping (Result<SearchResponse, Error>) -> Void
@@ -65,6 +79,14 @@ final class APIManager {
         )
     }
     
+    /// Makes a request to the `marketNews` or `companyNews` endpoint given the ``NewsViewController/contentType``.
+    /// - Parameters:
+    ///   - type: Could be ``NewsViewController/contentType/topStories`` or ``NewsViewController/contentType/companyNews(symbol:)``.
+    ///   - completion: Closure of `Result` that holds an array of ``NewsStory`` upon success and `Error` upon failure.
+    ///
+    /// Returns nothing.
+    /// - Note: ``NewsViewController/contentType/topStories`` API endpoint is `news`
+    /// - Note: ``NewsViewController/contentType/companyNews(symbol:)`` API endpoint is `company-news`
     public func news(
         for type: NewsViewController.contentType,
         completion: @escaping (Result<[NewsStory], Error>) -> Void
@@ -131,7 +153,7 @@ final class APIManager {
     /// - Parameters:
     ///   - endpoint: An endpoint to unpack of type `Endpoint` enum
     ///   - queryParams: Defaults to empty dictionary
-    /// - Returns: `URL` Optional type
+    /// - Returns: `URL` Optional
     private func url(
         for endpoint: Endpoint,
         queryParams: [String: String] = [:]

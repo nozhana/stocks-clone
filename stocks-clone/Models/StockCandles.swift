@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A struct that represents the response decoded from a JSON returned from ``APIManager/candles(for:numberOfDays:completion:)`` API endpoint.
 struct StockCandles: Codable {
     let close: [Double]
     let high: [Double]
@@ -26,6 +27,7 @@ struct StockCandles: Codable {
         case volume = "v"
     }
     
+    /// An array of ``CandleStick`` structs for all data in the API response.
     var candleSticks: [CandleStick] {
         var sticks: [CandleStick] = []
         
@@ -44,11 +46,13 @@ struct StockCandles: Codable {
         return sticks.sorted(by: { $0.date < $1.date })
     }
     
+    /// The total traded volume for the specified `TimeInterval` in this response.
     var totalVolume: Double {
         volume.reduce(0, +)
     }
 }
 
+/// An object representing a stock candle, with `date`, `open`, `close`, `high`, `low`.
 struct CandleStick {
     let date: Date
     let open: Double

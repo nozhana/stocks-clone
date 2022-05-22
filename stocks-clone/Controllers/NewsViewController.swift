@@ -8,12 +8,18 @@
 import SafariServices
 import UIKit
 
+/// A view controller that manages the market news for generic and specific purposes in a table.
 class NewsViewController: UIViewController {
     
+    /// An enum representing the type of content to render in the view.
+    ///
+    /// Could be `.topStories` or `.companyNews(symbol:)`
     enum contentType {
         case topStories
         case companyNews(symbol: String)
         
+        /// The view title that represents "Top Stories" if the news category is generic,
+        /// otherwise it will represent the uppercased symbol correlated with the given query.
         var title: String {
             switch self {
             case .topStories:
@@ -26,6 +32,7 @@ class NewsViewController: UIViewController {
     
 //    MARK: - Properties
     
+    /// An array of ``NewsStory`` prepopulated with mock data.
     private var stories: [NewsStory] = [
         NewsStory(
             category: "",
@@ -40,8 +47,16 @@ class NewsViewController: UIViewController {
         )
     ]
     
+    /// The type of content this view controller represents.
     private var type: contentType
     
+    /// The `UITableView` embedded in this controller.
+    ///
+    /// The cells are of type ``NewsStoryTableViewCell``.
+    ///
+    /// The header is of type ``NewsHeaderView``.
+    ///
+    /// The background color is set to `.clear`.
     let tableView: UITableView = {
         let table = UITableView()
 //        Register cell, header
@@ -56,6 +71,8 @@ class NewsViewController: UIViewController {
         
 //    MARK: - Init
     
+    /// Initializes the ``NewsViewController`` with a ``contentType``.
+    /// - Parameter type: Could be ``contentType/topStories`` or ``contentType/companyNews(symbol:)``
     init(type: contentType) {
         self.type = type
         super.init(nibName: nil, bundle: nil)
@@ -67,12 +84,14 @@ class NewsViewController: UIViewController {
     
 //    MARK: - Lifecycle
     
+    /// Sets up the table and fetches the news after the view loads.
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
         fetchNews()
     }
     
+    /// Adjusts the ``tableView`` frame to match this view's bounds after laying out subviews.
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
@@ -80,12 +99,16 @@ class NewsViewController: UIViewController {
     
 //    MARK: - Private
     
+    /// Adds the ``tableView`` as subview and assign its `delegate` and `dataSource` to self.
     private func setupTable() {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
     }
     
+    /// Calls API endpoint ``APIManager/news(for:completion:)`` with `type` property.
+    ///
+    /// Assigns `stories` property to the ``NewsStory`` array in API call completion handler.
     private func fetchNews() {
         APIManager.shared.news(for: type) { [weak self] result in
             guard let self = self else { return }
@@ -102,6 +125,10 @@ class NewsViewController: UIViewController {
         }
     }
     
+    /// Opens given URL in a Safari view.
+    /// - Parameter url: URL literal to open in `SFSafariViewController`.
+    ///
+    /// Prefers entering reader mode.
     private func open(url: URL) {
         let config = SFSafariViewController.Configuration()
         config.entersReaderIfAvailable = true
@@ -111,6 +138,7 @@ class NewsViewController: UIViewController {
         
     }
     
+    /// Presents an alert that notifies the user that the URL passed in `open(url:)` failed to open.
     private func presentFailedToOpenAlert() {
         let alertVC = UIAlertController(
             title: "Error",
