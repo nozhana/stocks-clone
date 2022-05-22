@@ -46,7 +46,7 @@ extension UIView {
     }
 }
 
-// MARK: - Time Interval
+// MARK: - TimeInterval Shorthands
 
 extension TimeInterval {
     internal static var secondsPerDay: Double {
@@ -74,7 +74,7 @@ extension TimeInterval {
     }
 }
 
-// MARK: - DateFormatter
+// MARK: - ISO8601 & Pretty Date Formatter
 
 extension DateFormatter {
     static let iso8601DateFormatter: DateFormatter = {
@@ -90,7 +90,7 @@ extension DateFormatter {
     }()
 }
 
-// MARK: - String
+// MARK: - String from UNIX Time
 
 extension String {
     static func iso8601DateString(from timeInterval: TimeInterval) -> String {
@@ -112,7 +112,7 @@ extension String {
     }
 }
 
-// MARK: - UIImageView
+// MARK: - setImage in ImageView
 
 extension UIImageView {
     func setImage(with url: URL?) {

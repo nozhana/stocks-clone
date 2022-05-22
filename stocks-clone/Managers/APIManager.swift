@@ -81,14 +81,14 @@ final class APIManager {
             )
         case .companyNews(let symbol):
             let today = Date()
-            let oneWeekBack = today.addingTimeInterval(.days(-7))
+            let oneWeekAgo = today.addingTimeInterval(.days(-7))
 
             request(
                 url: url(
                     for: .companyNews,
                     queryParams: [
                         "symbol": symbol,
-                        "from": .iso8601DateString(from: oneWeekBack),
+                        "from": .iso8601DateString(from: oneWeekAgo),
                         "to": .iso8601DateString(from: today)
                     ]
                 ),

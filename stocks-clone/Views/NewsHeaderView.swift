@@ -75,7 +75,6 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     @objc private func didTapButton() {
 //        Call delegate
         delegate?.newsHeaderViewDidTapAddButton(self)
-        
     }
     
 //    MARK: - Public
