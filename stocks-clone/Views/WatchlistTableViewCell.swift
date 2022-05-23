@@ -18,7 +18,7 @@ class WatchlistTableViewCell: UITableViewCell {
     /// The preferred height of the ``WatchlistTableViewCell``.
     ///
     /// Defaults to 140.
-    static let preferredHeight: CGFloat = 140
+    static let preferredHeight: CGFloat = 80
     
     /// The ViewModel that structures the data represented in the ``WatchlistTableViewCell``.
     ///
@@ -26,19 +26,19 @@ class WatchlistTableViewCell: UITableViewCell {
     ///   - `symbol: String`
     ///   - `company: String`
     ///   - `price: String` (decimal formatted)
-    ///   - `change: String` (decimal formatted)
     ///   - `changePercentage: String` (percent formatted)
     ///   - `changeColor: UIColor`
     ///     - `.systemRed` for negative change
     ///     - `.systemGreen` for positive change
+    ///   - `change: String` (decimal formatted)
     ///   - **TODO:** `chartViewModel`
     struct ViewModel {
         let symbol: String
         let company: String
         let price: String // Formatted
-        let change: String // Formatted
         let changePercentage: String // Formatted
         let changeColor: UIColor // red or green
+        let change: String // Formatted
 //        TODO: let chartViewModel: StockChartView.ViewModel
     }
     
@@ -50,7 +50,14 @@ class WatchlistTableViewCell: UITableViewCell {
     ///   - reuseIdentifier: `String`.
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(symbolLabel, companyLabel, priceLabel, changeLabel, miniChartView)
+        addSubviews(
+            symbolLabel,
+            companyLabel,
+            priceLabel,
+            changePercentageLabel,
+            changeLabel,
+            miniChartView
+        )
     }
     
     required init?(coder: NSCoder) {
@@ -59,6 +66,54 @@ class WatchlistTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        symbolLabel.sizeToFit()
+        companyLabel.sizeToFit()
+        priceLabel.sizeToFit()
+        changePercentageLabel.sizeToFit()
+        changeLabel.sizeToFit()
+        miniChartView.sizeToFit()
+        
+        let verticalDistance: CGFloat = 4
+        let horizontalDistance: CGFloat = 10
+        let rightMargin: CGFloat = 16
+        let leftContentTop: CGFloat = (contentView.h - symbolLabel.h - companyLabel.h - verticalDistance) / 2
+        let rightContentTop: CGFloat = (contentView.h - priceLabel.h - changePercentageLabel.h - verticalDistance) / 2
+        
+        symbolLabel.frame = .init(
+            x: separatorInset.left,
+            y: leftContentTop,
+            width: symbolLabel.w,
+            height: symbolLabel.h
+        )
+        
+        companyLabel.frame = .init(
+            x: separatorInset.left,
+            y: symbolLabel.b + verticalDistance,
+            width: companyLabel.w,
+            height: companyLabel.h
+        )
+        
+        priceLabel.frame = .init(
+            x: contentView.r - priceLabel.w - rightMargin,
+            y: rightContentTop,
+            width: priceLabel.w,
+            height: priceLabel.h
+        )
+        
+        changePercentageLabel.frame = .init(
+            x: contentView.r - changePercentageLabel.w - rightMargin,
+            y: priceLabel.b + verticalDistance,
+            width: changePercentageLabel.w,
+            height: changePercentageLabel.h
+        )
+        
+        changeLabel.frame = .init(
+            x: changePercentageLabel.l - changeLabel.w - horizontalDistance,
+            y: changePercentageLabel.b - changeLabel.h,
+            width: changeLabel.w,
+            height: changeLabel.h
+        )
     }
     
     /// Deconstruct all subviews accordingly.
@@ -67,8 +122,9 @@ class WatchlistTableViewCell: UITableViewCell {
         symbolLabel.text = nil
         companyLabel.text = nil
         priceLabel.text = nil
+        changePercentageLabel.text = nil
         changeLabel.text = nil
-        miniChartView.reset()
+        miniChartView.reset() // Stubbed
     }
     
 //    MARK: - Private
@@ -76,7 +132,8 @@ class WatchlistTableViewCell: UITableViewCell {
     /// The label that represents the stock symbol.
     private let symbolLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .systemFont(ofSize: 21, weight: .bold)
+        label.textColor = .label
         return label
     }()
     
@@ -91,15 +148,23 @@ class WatchlistTableViewCell: UITableViewCell {
     /// The label that represents the current price of the stock.
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.font = .systemFont(ofSize: 19, weight: .bold)
+        label.textColor = .label
+        return label
+    }()
+    
+    private let changePercentageLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .white
         return label
     }()
     
     /// The label that represents the changed value of the stock since last closing price.
     private let changeLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: .light)
-        label.textColor = .white
+        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.textColor = .secondaryLabel
         return label
     }()
     
@@ -116,8 +181,9 @@ class WatchlistTableViewCell: UITableViewCell {
         symbolLabel.text = viewModel.symbol
         companyLabel.text = viewModel.company
         priceLabel.text = viewModel.price
-        changeLabel.text = viewModel.changePercentage
-        changeLabel.backgroundColor = viewModel.changeColor
+        changePercentageLabel.text = viewModel.changePercentage
+        changePercentageLabel.backgroundColor = viewModel.changeColor
+        changeLabel.text = viewModel.change
 //        TODO: Configure chart
     }
     

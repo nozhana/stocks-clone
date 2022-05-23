@@ -103,9 +103,9 @@ class WatchListViewController: UIViewController {
                     symbol: symbol,
                     company: UserDefaults.standard.string(forKey: symbol) ?? "No name available",
                     price: .decimalFormatted(from: candleSticks.last?.close ?? 0.0),
-                    change: .decimalFormatted(from: getChange(from: candleSticks)),
-                    changePercentage: .percentFormatted(from: getChangeFraction(from: candleSticks)),
-                    changeColor: getChange(from: candleSticks) < 0 ? .systemRed : .systemGreen
+                    changePercentage: .changePercentFormatted(from: getChangeFraction(from: candleSticks)),
+                    changeColor: getChange(from: candleSticks) < 0 ? .systemRed : .systemGreen,
+                    change: .changeFormatted(from: getChange(from: candleSticks))
                 )
             )
 //            #DEBUG: Check if correct data is fetched
@@ -205,6 +205,10 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
         watchlistMap.count
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        WatchlistTableViewCell.preferredHeight
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: WatchlistTableViewCell.identifier,
@@ -212,8 +216,7 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
         ) as? WatchlistTableViewCell else {
             fatalError()
         }
-        
-//        TODO: Configure cell with ViewModel
+        cell.configure(with: viewModels[indexPath.row])
         
         return cell
     }

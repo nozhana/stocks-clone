@@ -166,7 +166,20 @@ extension String {
         NumberFormatter.decimalFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
     }
     
-    static func percentFormatted(from double: Double) -> String {
-        NumberFormatter.percentFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
+    static func changeFormatted(from double: Double) -> String {
+        if double < 0 {
+            return .decimalFormatted(from: double)
+        } else {
+            return "+" + .decimalFormatted(from: double)
+        }
+    }
+    
+    static func changePercentFormatted(from double: Double) -> String {
+        let percentFormatted = NumberFormatter.percentFormatter.string(from: NSNumber(value: double)) ?? "\(double)"
+        if double < 0 {
+            return percentFormatted
+        } else {
+            return "+" + percentFormatted
+        }
     }
 }
