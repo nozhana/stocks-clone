@@ -183,3 +183,17 @@ extension String {
         }
     }
 }
+
+// MARK: - UIFont (Descriptors)
+
+extension UIFont {
+    var serif: UIFont {
+        guard let serif = fontDescriptor.withDesign(.serif) else { return self }
+        return .init(descriptor: serif, size: 0.0)
+    }
+    
+    var condensed: UIFont {
+        guard let condensed = fontDescriptor.withSymbolicTraits(.traitCondensed) else { return self }
+        return .init(descriptor: condensed, size: 0.0)
+    }
+}

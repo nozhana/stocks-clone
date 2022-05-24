@@ -32,14 +32,14 @@ class NewsStoryTableViewCell: UITableViewCell {
 //    Source
     private let sourceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .heavy)
+        label.font = .systemFont(ofSize: 17, weight: .heavy).serif
         return label
     }()
     
 //    Headline
     private let headlineLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17, weight: .medium)
+        label.font = .systemFont(ofSize: 17, weight: .medium).condensed
         label.numberOfLines = 0
         return label
     }()
