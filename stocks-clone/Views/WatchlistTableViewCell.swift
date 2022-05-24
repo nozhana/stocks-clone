@@ -148,14 +148,16 @@ class WatchlistTableViewCell: UITableViewCell {
     /// The label that represents the current price of the stock.
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 19, weight: .bold)
+//        label.font = .systemFont(ofSize: 19, weight: .bold)
+        label.font = .monospacedDigitSystemFont(ofSize: 17, weight: .bold)
         label.textColor = .label
         return label
     }()
     
     private let changePercentageLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+//        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .monospacedDigitSystemFont(ofSize: 15, weight: .bold)
         label.textColor = .white
         return label
     }()
@@ -163,7 +165,8 @@ class WatchlistTableViewCell: UITableViewCell {
     /// The label that represents the changed value of the stock since last closing price.
     private let changeLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+//        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .monospacedDigitSystemFont(ofSize: 15, weight: .medium)
         label.textColor = .secondaryLabel
         return label
     }()

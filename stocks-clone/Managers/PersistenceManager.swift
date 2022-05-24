@@ -49,13 +49,13 @@ final class PersistenceManager {
     private func setupDefaultWatchlist() {
         let watchlistMap = [
             "AAPL": "Apple Inc.",
-            "MSFT": "Microsoft Corporation",
-            "GOOG": "Alphabet Inc. (Google)",
+            "MSFT": "Microsoft Corp.",
+            "GOOG": "Alphabet Inc.",
             "FB": "Facebook Inc.",
             "META": "Meta Platforms",
             "AMZN": "Amazon Inc.",
             "SNAP": "Snapchat Inc.",
-            "WORK": "Slack Technologies",
+            "WORK": "Slack Tech.",
             "NVDA": "NVIDIA Inc.",
             "NKE": "Nike Inc."
         ]

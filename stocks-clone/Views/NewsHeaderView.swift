@@ -13,7 +13,7 @@ protocol NewsHeaderViewDelegate: AnyObject {
 
 class NewsHeaderView: UITableViewHeaderFooterView {
     static let identifier = "NewsHeaderView"
-    static let preferredHeight: CGFloat = 80
+    static let preferredHeight: CGFloat = 70
     
     weak var delegate: NewsHeaderViewDelegate?
     
@@ -24,13 +24,14 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 32)
+        label.font = .systemFont(ofSize: 23, weight: .black)
         return label
     }()
     
     private let button: UIButton = {
         let button = UIButton()
         button.setTitle("+ Watchlist", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
         button.backgroundColor = .systemBlue
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 8

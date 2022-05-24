@@ -11,7 +11,7 @@ import UIKit
 class NewsStoryTableViewCell: UITableViewCell {
     static let identifier = "NewsStoryTableViewCell"
     
-    static let preferredHeight: CGFloat = 140
+    static let preferredHeight: CGFloat = 120
     
     struct ViewModel {
         let source: String
@@ -32,14 +32,14 @@ class NewsStoryTableViewCell: UITableViewCell {
 //    Source
     private let sourceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .systemFont(ofSize: 17, weight: .heavy)
         return label
     }()
     
 //    Headline
     private let headlineLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 24, weight: .regular)
+        label.font = .systemFont(ofSize: 17, weight: .medium)
         label.numberOfLines = 0
         return label
     }()
@@ -47,7 +47,7 @@ class NewsStoryTableViewCell: UITableViewCell {
 //    Date
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .light)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
         label.textColor = .secondaryLabel
         return label
     }()
