@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol WatchlistTableViewCellDelegate: AnyObject {
+    func didSetMaxCellRightContentWidth()
+}
+
 /// A cell view that represents a watchlist item.
 ///
 /// **Identifier:** `WatchlistTableViewCell`
@@ -14,6 +18,8 @@ class WatchlistTableViewCell: UITableViewCell {
     
     /// The ``WatchlistTableViewCell`` reuse identifier.
     static let identifier = "WatchlistTableViewCell"
+    
+    weak var delegate: WatchlistTableViewCellDelegate?
     
     /// The preferred height of the ``WatchlistTableViewCell``.
     ///
@@ -72,13 +78,17 @@ class WatchlistTableViewCell: UITableViewCell {
         priceLabel.sizeToFit()
         changePercentageLabel.sizeToFit()
         changeLabel.sizeToFit()
-        miniChartView.sizeToFit()
+        
+        priceLabel.textAlignment = .right
+        changePercentageLabel.textAlignment = .right
+        changeLabel.textAlignment = .right
         
         let verticalDistance: CGFloat = 4
-        let horizontalDistance: CGFloat = 10
+        let horizontalDistance: CGFloat = 8
         let rightMargin: CGFloat = 16
+        let topMargin: CGFloat = 8
         let leftContentTop: CGFloat = (contentView.h - symbolLabel.h - companyLabel.h - verticalDistance) / 2
-        let rightContentTop: CGFloat = (contentView.h - priceLabel.h - changePercentageLabel.h - verticalDistance) / 2
+        let rightContentTop: CGFloat = (contentView.h - priceLabel.h - changePercentageLabel.h - changeLabel.h - verticalDistance) / 2
         
         symbolLabel.frame = .init(
             x: separatorInset.left,
@@ -94,25 +104,42 @@ class WatchlistTableViewCell: UITableViewCell {
             height: companyLabel.h
         )
         
+        let currentRightContentWidth = max(
+            max(priceLabel.w, changePercentageLabel.w),
+            WatchListViewController.maxCellRightContentWidth
+        )
+        
+        if currentRightContentWidth > WatchListViewController.maxCellRightContentWidth {
+            WatchListViewController.maxCellRightContentWidth = currentRightContentWidth
+            delegate?.didSetMaxCellRightContentWidth()
+        }
+        
         priceLabel.frame = .init(
-            x: contentView.r - priceLabel.w - rightMargin,
+            x: contentView.w - currentRightContentWidth - rightMargin,
             y: rightContentTop,
-            width: priceLabel.w,
+            width: currentRightContentWidth,
             height: priceLabel.h
         )
         
         changePercentageLabel.frame = .init(
-            x: contentView.r - changePercentageLabel.w - rightMargin,
+            x: contentView.w - currentRightContentWidth - rightMargin,
             y: priceLabel.b + verticalDistance,
-            width: changePercentageLabel.w,
+            width: currentRightContentWidth,
             height: changePercentageLabel.h
         )
         
         changeLabel.frame = .init(
-            x: changePercentageLabel.l - changeLabel.w - horizontalDistance,
-            y: changePercentageLabel.b - changeLabel.h,
-            width: changeLabel.w,
+            x: contentView.w - currentRightContentWidth - rightMargin,
+            y: changePercentageLabel.b,
+            width: currentRightContentWidth,
             height: changeLabel.h
+        )
+        
+        miniChartView.frame = .init(
+            x: priceLabel.l - miniChartView.w - horizontalDistance,
+            y: topMargin,
+            width: contentView.w / 3,
+            height: contentView.h - (topMargin * 2)
         )
     }
     
@@ -155,24 +182,28 @@ class WatchlistTableViewCell: UITableViewCell {
     }()
     
     private let changePercentageLabel: UILabel = {
-        let label = UILabel()
-//        label.font = .systemFont(ofSize: 15, weight: .bold)
+        let label = PaddingLabel(top: 2, left: 4, bottom: 2, right: 4)
         label.font = .monospacedDigitSystemFont(ofSize: 15, weight: .bold)
         label.textColor = .white
+        label.layer.cornerRadius = 4
+        label.layer.masksToBounds = true
         return label
     }()
     
     /// The label that represents the changed value of the stock since last closing price.
     private let changeLabel: UILabel = {
         let label = UILabel()
-//        label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.font = .monospacedDigitSystemFont(ofSize: 15, weight: .medium)
+        label.font = .monospacedDigitSystemFont(ofSize: 13, weight: .medium)
         label.textColor = .secondaryLabel
         return label
     }()
     
     /// The minichart that represents the stock price history.
-    private let miniChartView = StockChartView()
+    private let miniChartView: StockChartView = {
+        let chart = StockChartView()
+        chart.backgroundColor = .link
+        return chart
+    }()
    
 //    MARK: - Public
     

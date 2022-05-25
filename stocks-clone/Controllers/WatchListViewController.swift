@@ -12,6 +12,10 @@ class WatchListViewController: UIViewController {
     
     private var panelVC: FloatingPanelController?
     
+    private var searchTimer: Timer?
+    
+    static var maxCellRightContentWidth: CGFloat = 0
+    
     private var watchlistMap: [String: [CandleStick]] = [:]
     
     private var viewModels: [WatchlistTableViewCell.ViewModel] = []
@@ -22,8 +26,6 @@ class WatchListViewController: UIViewController {
                            forCellReuseIdentifier: WatchlistTableViewCell.identifier)
         return tableView
     }()
-    
-    private var searchTimer: Timer?
 
 //    MARK: - Lifecycle
     
@@ -216,6 +218,7 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
         ) as? WatchlistTableViewCell else {
             fatalError()
         }
+        cell.delegate = self
         cell.configure(with: viewModels[indexPath.row])
         
         return cell
@@ -230,5 +233,11 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
 extension WatchListViewController: FloatingPanelControllerDelegate {
     func floatingPanelWillBeginAttracting(_ fpc: FloatingPanelController, to state: FloatingPanelState) {
         navigationController?.setNavigationBarHidden(state == .full, animated: true)
+    }
+}
+
+extension WatchListViewController: WatchlistTableViewCellDelegate {
+    func didSetMaxCellRightContentWidth() {
+        tableView.reloadData()
     }
 }

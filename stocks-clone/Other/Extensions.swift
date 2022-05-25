@@ -197,3 +197,47 @@ extension UIFont {
         return .init(descriptor: condensed, size: 0.0)
     }
 }
+
+// MARK: - PaddingLabel: UILabel
+
+class PaddingLabel: UILabel {
+    var topInset: CGFloat
+    var leftInset: CGFloat
+    var bottomInset: CGFloat
+    var rightInset: CGFloat
+    
+    required init(top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) {
+        topInset = top
+        leftInset = left
+        bottomInset = bottom
+        rightInset = right
+        super.init(frame: CGRect.zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) not implemented for PaddingLabel")
+    }
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        super.drawText(in: rect.inset(by: insets))
+    }
+    
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        intrinsicContentSize
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        var contentSize = super.intrinsicContentSize
+        contentSize.height += topInset + bottomInset
+        contentSize.width += leftInset + rightInset
+        return contentSize
+    }
+    
+    override var bounds: CGRect {
+        didSet {
+            preferredMaxLayoutWidth = bounds.width - (leftInset + rightInset)
+        }
+    }
+}
+
