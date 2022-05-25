@@ -238,6 +238,7 @@ extension WatchListViewController: FloatingPanelControllerDelegate {
 
 extension WatchListViewController: WatchlistTableViewCellDelegate {
     func didSetMaxCellRightContentWidth() {
+//        TODO: Optimize - Only refresh rows prior to the row changing the max width e.g. current row
         tableView.reloadData()
     }
 }
