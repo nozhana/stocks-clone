@@ -45,7 +45,7 @@ class WatchlistTableViewCell: UITableViewCell {
         let changePercentage: String // Formatted
         let changeColor: UIColor // red or green
         let change: String // Formatted
-//        TODO: let chartViewModel: StockChartView.ViewModel
+        let chartViewModel: StockChartView.ViewModel
     }
     
 //    MARK: - Init

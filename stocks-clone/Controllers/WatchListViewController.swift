@@ -107,7 +107,12 @@ class WatchListViewController: UIViewController {
                     price: .decimalFormatted(from: candleSticks.last?.close ?? 0.0),
                     changePercentage: .changePercentFormatted(from: getChangeFraction(from: candleSticks)),
                     changeColor: getChange(from: candleSticks) < 0 ? .systemRed : .systemGreen,
-                    change: .changeFormatted(from: getChange(from: candleSticks))
+                    change: .changeFormatted(from: getChange(from: candleSticks)),
+                    chartViewModel: .init(
+                        data: candleSticks,
+                        showLegend: false,
+                        showAxis: false
+                    )
                 )
             )
 //            #DEBUG: Check if correct data is fetched
