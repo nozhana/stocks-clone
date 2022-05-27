@@ -241,3 +241,8 @@ class PaddingLabel: UILabel {
     }
 }
 
+// MARK: - Notification
+
+extension Notification.Name {
+    static let didAddToWatchlist = Notification.Name("didAddToWatchList")
+}
