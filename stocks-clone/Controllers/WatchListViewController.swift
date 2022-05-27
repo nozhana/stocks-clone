@@ -104,7 +104,7 @@ class WatchListViewController: UIViewController {
             viewModels.append(
                 .init(
                     symbol: symbol,
-                    company: UserDefaults.standard.string(forKey: symbol) ?? "No name available",
+                    companyName: UserDefaults.standard.string(forKey: symbol) ?? "No name available",
                     price: .decimalFormatted(from: candleSticks.last?.close ?? 0.0),
                     changePercentage: .changePercentFormatted(from: getChangeFraction(from: candleSticks)),
                     changeColor: getChange(from: candleSticks) < 0 ? .systemRed : .systemGreen,
@@ -211,9 +211,13 @@ extension WatchListViewController: SearchResultsViewControllerDelegate {
 //        Hide keyboard after selection
         navigationItem.searchController?.searchBar.resignFirstResponder()
         
-        let detailVC = StockDetailsViewController()
-        let navVC = UINavigationController(rootViewController: detailVC)
+        let detailVC = StockDetailsViewController(
+            symbol: result.displaySymbol,
+            companyName: result.description
+        )
         detailVC.title = result.description
+        
+        let navVC = UINavigationController(rootViewController: detailVC)
         present(navVC, animated: true)
     }
 }
@@ -267,7 +271,17 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
 //    Selecting cells
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        TODO: Open details for selection
+        
+        let viewModel = viewModels[indexPath.row]
+        let detailVC = StockDetailsViewController(
+            symbol: viewModel.symbol,
+            companyName: viewModel.companyName,
+            candleSticks: watchlistMap[viewModel.symbol] ?? []
+        )
+        detailVC.title = viewModel.companyName
+        
+        let navVC = UINavigationController(rootViewController: detailVC)
+        present(navVC, animated: true)
     }
 }
 

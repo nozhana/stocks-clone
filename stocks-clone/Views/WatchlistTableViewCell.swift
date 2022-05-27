@@ -40,7 +40,7 @@ class WatchlistTableViewCell: UITableViewCell {
     ///   - **TODO:** `chartViewModel`
     struct ViewModel {
         let symbol: String
-        let company: String
+        let companyName: String
         let price: String // Formatted
         let changePercentage: String // Formatted
         let changeColor: UIColor // red or green
@@ -214,7 +214,7 @@ class WatchlistTableViewCell: UITableViewCell {
     /// **TODO:** Configure minichart.
     public func configure(with viewModel: ViewModel) {
         symbolLabel.text = viewModel.symbol
-        companyLabel.text = viewModel.company
+        companyLabel.text = viewModel.companyName
         priceLabel.text = viewModel.price
         changePercentageLabel.text = viewModel.changePercentage
         changePercentageLabel.backgroundColor = viewModel.changeColor
