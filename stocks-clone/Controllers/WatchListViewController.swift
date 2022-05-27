@@ -37,6 +37,7 @@ class WatchListViewController: UIViewController {
         setupSearchController()
         setupTableView()
         fetchWatchlistData()
+        setupObserver()
         setupFloatingPanel()
     }
     
@@ -72,7 +73,7 @@ class WatchListViewController: UIViewController {
         
         let dispatchGroup = DispatchGroup()
         
-        for symbol in symbols {
+        for symbol in symbols where watchlistMap[symbol] == nil {
             dispatchGroup.enter()
             
             APIManager.shared.candles(for: symbol) { [weak self] result in
@@ -155,6 +156,16 @@ class WatchListViewController: UIViewController {
         panelVC?.set(contentViewController: newsVC)
         panelVC?.track(scrollView: newsVC.tableView)
         panelVC?.addPanel(toParent: self)
+    }
+    
+    private func setupObserver() {
+        NotificationCenter.default.addObserver(
+            forName: .didAddToWatchlist,
+            object: nil,
+            queue: .main) { [weak self] _ in
+                self?.viewModels.removeAll()
+                self?.fetchWatchlistData()
+        }
     }
     
 }
