@@ -37,6 +37,10 @@ class StockDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+//        TODO: Show View
+//        TODO: Financial Data
+//        TODO: Show Chart
+//        TODO: News
     }
 
 }
