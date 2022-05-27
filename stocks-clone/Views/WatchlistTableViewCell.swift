@@ -56,6 +56,7 @@ class WatchlistTableViewCell: UITableViewCell {
     ///   - reuseIdentifier: `String`.
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.clipsToBounds = true
         addSubviews(
             symbolLabel,
             companyLabel,
@@ -201,7 +202,7 @@ class WatchlistTableViewCell: UITableViewCell {
     /// The minichart that represents the stock price history.
     private let miniChartView: StockChartView = {
         let chart = StockChartView()
-        chart.backgroundColor = .link
+        chart.clipsToBounds = true
         return chart
     }()
    
