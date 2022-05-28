@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class StockDetailsViewController: UIViewController {
     
@@ -114,6 +115,17 @@ extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         NewsStoryTableViewCell.preferredHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let url = URL(string: stories[indexPath.row].url) else { return }
+        let safariConfig = SFSafariViewController.Configuration()
+        safariConfig.entersReaderIfAvailable = true
+        let safariVC = SFSafariViewController(url: url, configuration: safariConfig)
+        
+        present(safariVC, animated: true)
     }
     
 //    MARK: Header
