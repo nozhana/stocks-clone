@@ -45,7 +45,7 @@ class NewsHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .secondarySystemBackground
         contentView.addSubviews(label, button)
-        button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -73,9 +73,10 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     
 //    MARK: - Private
     
-    @objc private func didTapButton() {
+    @objc private func didTapAddButton() {
 //        Call delegate
         delegate?.newsHeaderViewDidTapAddButton(self)
+        button.isHidden = true
     }
     
 //    MARK: - Public
