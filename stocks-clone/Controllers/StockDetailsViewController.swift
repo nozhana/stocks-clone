@@ -137,8 +137,7 @@ extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource
         header.delegate = self
         header.configure(with: .init(
             title: symbol.uppercased(),
-//            TODO: Show add button if symbol not in watchlist
-            shouldShowAddButton: true
+            shouldShowAddButton: !PersistenceManager.shared.watchlistContains(symbol: symbol)
         ))
         return header
     }
