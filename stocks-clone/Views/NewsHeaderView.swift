@@ -13,7 +13,7 @@ protocol NewsHeaderViewDelegate: AnyObject {
 
 class NewsHeaderView: UITableViewHeaderFooterView {
     static let identifier = "NewsHeaderView"
-    static let preferredHeight: CGFloat = 70
+    static let preferredHeight: CGFloat = 80
     
     weak var delegate: NewsHeaderViewDelegate?
     
