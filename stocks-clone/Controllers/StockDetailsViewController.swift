@@ -53,6 +53,7 @@ class StockDetailsViewController: UIViewController {
         setupTable()
         fetchFinancialData()
         fetchNews()
+        setupCloseButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -62,15 +63,35 @@ class StockDetailsViewController: UIViewController {
 
 //    MARK: - Private
     
+    private func setupCloseButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .close,
+            target: self,
+            action: #selector(didTapCloseButton)
+        )
+    }
+    
+    @objc private func didTapCloseButton() {
+        dismiss(animated: true)
+    }
+    
     private func setupTable() {
-//        TODO: Show view
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableHeaderView = UIView(frame: CGRect(
+                x: 0,
+                y: 0,
+                width: view.w,
+                height: (view.w * 0.7) + 100
+        ))
+        
     }
     
     private func fetchFinancialData() {
 //        TODO: Fetch financial data
+//        Fetch candleSticks if needed
+//        Fetch financial metrics
         renderChart()
     }
     
