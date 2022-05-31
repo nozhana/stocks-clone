@@ -120,6 +120,23 @@ final class APIManager {
         }
     }
     
+    public func financialMetrics(
+        for symbol: String,
+        completion: @escaping (Result<FinancialMetricsResponse, Error>) -> Void
+    ) {
+        request(
+            url: url(
+                for: .basicFinancials,
+                queryParams: [
+                    "symbol": symbol,
+                    "metric": "all"
+                ]
+            ),
+            expecting: FinancialMetricsResponse.self,
+            completion: completion
+        )
+    }
+    
 //    MARK: - Private
     
     /// Enumerates various endpoints of the API URL.
@@ -136,6 +153,7 @@ final class APIManager {
         case marketNews = "news"
         case companyNews = "company-news"
         case stockCandles = "stock/candle"
+        case basicFinancials = "stock/metric"
     }
     
     /// Various Errors in API
