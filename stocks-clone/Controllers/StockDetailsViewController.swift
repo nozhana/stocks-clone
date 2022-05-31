@@ -90,13 +90,32 @@ class StockDetailsViewController: UIViewController {
     
     private func fetchFinancialData() {
 //        TODO: Fetch financial data
+        let dispatchGroup = DispatchGroup()
+        
 //        Fetch candleSticks if needed
+        
 //        Fetch financial metrics
-        renderChart()
+        dispatchGroup.enter()
+        APIManager.shared.financialMetrics(for: symbol) { result in
+            defer {
+                dispatchGroup.leave()
+            }
+            switch result {
+            case .success(let metricsResponse):
+                let metrics = metricsResponse.metric
+            case .failure(let error):
+                print("Failed to fetch financials from API: \(error)")
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.renderChart()
+        }
     }
     
     private func renderChart() {
 //        TODO: Show chart
+//        Chart VM | FinancialMetricsViewModel(s)
     }
     
     private func fetchNews() {
