@@ -93,6 +93,10 @@ class StockDetailsViewController: UIViewController {
         let dispatchGroup = DispatchGroup()
         
 //        Fetch candleSticks if needed
+        if candleSticks.isEmpty {
+            dispatchGroup.enter()
+            
+        }
         
 //        Fetch financial metrics
         dispatchGroup.enter()
