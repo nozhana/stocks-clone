@@ -27,6 +27,8 @@ class StockDetailsViewController: UIViewController {
     
     private var stories: [NewsStory] = []
     
+    private var metrics: Metrics?
+    
 //    MARK: - Init
     
     init(
@@ -48,7 +50,7 @@ class StockDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         
         setupTable()
         fetchFinancialData()
@@ -85,7 +87,7 @@ class StockDetailsViewController: UIViewController {
                 width: view.w,
                 height: (view.w * 0.7) + 100
         ))
-        
+        tableView.backgroundColor = .clear
     }
     
     private func fetchFinancialData() {
@@ -107,8 +109,7 @@ class StockDetailsViewController: UIViewController {
             switch result {
             case .success(let metricsResponse):
                 let metrics = metricsResponse.metric
-//                #DEBUG Metrics
-                print("METRICS: \(metrics)")
+                self?.metrics = metrics
             case .failure(let error):
                 print("Failed to fetch financials from API: \(error)")
             }
@@ -131,7 +132,45 @@ class StockDetailsViewController: UIViewController {
             )
         )
         
-//        Configure chart
+//        Configure headerView
+        var metricViewModels: [MetricCollectionViewCell.ViewModel] = []
+        if let metrics = metrics {
+            metricViewModels.append(.init(
+                name: "52W High",
+                value: metrics.fiftyTwoWeekHigh
+            ))
+            
+            metricViewModels.append(.init(
+                name: "52W Low",
+                value: metrics.fiftyTwoWeekLow
+            ))
+            
+            metricViewModels.append(.init(
+                name: "52W Return",
+                value: metrics.fiftyTwoWeekPRD
+            ))
+            
+            metricViewModels.append(.init(
+                name: "10D Avg. Vol.",
+                value: metrics.tenDayAvgVolume
+            ))
+            
+            metricViewModels.append(.init(
+                name: "3M Avg. Vol.",
+                value: metrics.threeMonthsAvgVolume
+            ))
+            
+            metricViewModels.append(.init(
+                name: "Beta",
+                value: metrics.beta
+            ))
+        }
+        
+        headerView.configure(
+            chartViewModel: .init(data: [], showLegend: true, showAxis: true),
+            metricViewModels: metricViewModels
+        )
+        
         tableView.tableHeaderView = headerView
     }
     

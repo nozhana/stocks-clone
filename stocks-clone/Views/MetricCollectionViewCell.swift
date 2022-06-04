@@ -13,6 +13,11 @@ class MetricCollectionViewCell: UICollectionViewCell {
     static let identifier = "MetricCollectionViewCell"
     
     struct ViewModel {
+        internal init(name: String, value: Double) {
+            self.name = name
+            self.value = "\(value.rounded(to: 2))"
+        }
+        
         let name: String
         let value: String
     }
@@ -20,6 +25,7 @@ class MetricCollectionViewCell: UICollectionViewCell {
     private let nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.textColor = .label
+        nameLabel.font = .preferredFont(forTextStyle: .headline)
         
         return nameLabel
     }()
@@ -27,6 +33,7 @@ class MetricCollectionViewCell: UICollectionViewCell {
     private let valueLabel: UILabel = {
         let valueLabel = UILabel()
         valueLabel.textColor = .secondaryLabel
+        valueLabel.font = .preferredFont(forTextStyle: .subheadline)
         
         return valueLabel
     }()
@@ -50,7 +57,7 @@ class MetricCollectionViewCell: UICollectionViewCell {
         nameLabel.sizeToFit()
         valueLabel.sizeToFit()
         
-        let horizontalMargin: CGFloat = 4
+        let horizontalMargin: CGFloat = 16
         
         nameLabel.frame = CGRect(
             x: horizontalMargin,

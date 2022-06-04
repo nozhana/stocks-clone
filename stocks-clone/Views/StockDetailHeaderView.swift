@@ -11,12 +11,14 @@ class StockDetailHeaderView: UIView {
     
 //    MARK: - Properties
 
-    private let metricViewModels: [MetricCollectionViewCell.ViewModel] = []
+    private var metricViewModels: [MetricCollectionViewCell.ViewModel] = []
+    
+    private let collectionViewHeight: CGFloat = 100
     
 //    Subviews
     private let chartView: StockChartView = {
         let chartView = StockChartView()
-        chartView.backgroundColor = .link
+//        chartView.backgroundColor = .link
         return chartView
     }()
     
@@ -33,6 +35,8 @@ class StockDetailHeaderView: UIView {
             MetricCollectionViewCell.self,
             forCellWithReuseIdentifier: MetricCollectionViewCell.identifier
         )
+        
+        collectionView.backgroundColor = .secondarySystemBackground
         
         return collectionView
     }()
@@ -57,16 +61,21 @@ class StockDetailHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        chartView.frame = CGRect(x: 0, y: 0, width: w, height: h - 100)
-        collectionView.frame = CGRect(x: 0, y: h - 100, width: w, height: 100)
+        chartView.frame = CGRect(x: 0, y: 0, width: w, height: h - collectionViewHeight)
+        collectionView.frame = CGRect(x: 0, y: h - collectionViewHeight, width: w, height: collectionViewHeight)
     }
     
 //    MARK: - Public
     
     public func configure(
-        chartViewModel: StockChartView.ViewModel // TODO: Also FinancialMetrics ViewModels
+        chartViewModel: StockChartView.ViewModel,
+        metricViewModels: [MetricCollectionViewCell.ViewModel]
     ) {
+//        TODO: Update chart
         
+//        Update metrics
+        self.metricViewModels = metricViewModels
+        collectionView.reloadData()
     }
 }
 
@@ -96,6 +105,6 @@ extension StockDetailHeaderView: UICollectionViewDelegateFlowLayout, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: w / 2, height: h / 3)
+        CGSize(width: w / 2, height: collectionViewHeight / 3)
     }
 }
