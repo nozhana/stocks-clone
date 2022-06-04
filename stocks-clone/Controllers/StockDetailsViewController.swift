@@ -91,13 +91,25 @@ class StockDetailsViewController: UIViewController {
     }
     
     private func fetchFinancialData() {
-//        TODO: Fetch financial data
+//        Fetch financial data
         let dispatchGroup = DispatchGroup()
         
 //        Fetch candleSticks if needed
         if candleSticks.isEmpty {
             dispatchGroup.enter()
             
+            APIManager.shared.candles(for: symbol) { [weak self] result in
+                defer {
+                    dispatchGroup.leave()
+                }
+                
+                switch result {
+                case .success(let stockCandles):
+                    self?.candleSticks = stockCandles.candleSticks
+                case .failure(let error):
+                    print("Failed to fetch candles: \(error)")
+                }
+            }
         }
         
 //        Fetch financial metrics
@@ -167,7 +179,11 @@ class StockDetailsViewController: UIViewController {
         }
         
         headerView.configure(
-            chartViewModel: .init(data: [], showLegend: true, showAxis: true),
+            chartViewModel: .init(
+                data: candleSticks.map { $0.close },
+                showLegend: true,
+                showAxis: true
+            ),
             metricViewModels: metricViewModels
         )
         
@@ -175,7 +191,7 @@ class StockDetailsViewController: UIViewController {
     }
     
     private func fetchNews() {
-//        TODO: Fetch news
+//        Fetch news
         APIManager.shared.news(for: .companyNews(symbol: symbol)) { [weak self] result in
             switch result {
             case .success(let stories):

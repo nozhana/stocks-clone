@@ -18,7 +18,6 @@ class StockDetailHeaderView: UIView {
 //    Subviews
     private let chartView: StockChartView = {
         let chartView = StockChartView()
-//        chartView.backgroundColor = .link
         return chartView
     }()
     
@@ -71,7 +70,8 @@ class StockDetailHeaderView: UIView {
         chartViewModel: StockChartView.ViewModel,
         metricViewModels: [MetricCollectionViewCell.ViewModel]
     ) {
-//        TODO: Update chart
+//        Update chart
+        chartView.configure(with: chartViewModel)
         
 //        Update metrics
         self.metricViewModels = metricViewModels
