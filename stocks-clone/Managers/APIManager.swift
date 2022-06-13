@@ -38,7 +38,7 @@ final class APIManager {
     /// Returns nothing.
     public func candles(
         for symbol: String,
-        numberOfDays: Double = 7,
+        numberOfDays: Double = 30,
         completion: @escaping (Result<StockCandles, Error>) -> Void
     ) {
         let to = Date()
