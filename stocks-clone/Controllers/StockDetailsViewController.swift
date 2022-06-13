@@ -182,7 +182,8 @@ class StockDetailsViewController: UIViewController {
             chartViewModel: .init(
                 data: candleSticks.map { $0.close },
                 showLegend: true,
-                showAxis: true
+                showAxis: true,
+                fillColor: getChange(from: candleSticks) < 0 ? .systemRed : .systemGreen
             ),
             metricViewModels: metricViewModels
         )
@@ -204,6 +205,16 @@ class StockDetailsViewController: UIViewController {
             }
         }
     }
+    
+    private func getChange(from candleSticks: [CandleStick]) -> Double {
+        guard let latestClose = candleSticks.last?.close,
+              let priorClose = candleSticks.dropLast().last?.close
+        else { return 0.0 }
+        
+        let change = latestClose - priorClose
+        return change
+    }
+
 }
 
 // MARK: - Protocol conformations

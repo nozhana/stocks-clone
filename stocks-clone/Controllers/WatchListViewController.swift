@@ -112,7 +112,8 @@ class WatchListViewController: UIViewController {
                     chartViewModel: .init(
                         data: candleSticks.map { $0.close },
                         showLegend: false,
-                        showAxis: false
+                        showAxis: false,
+                        fillColor: getChange(from: candleSticks) < 0 ? .systemRed : .systemGreen
                     )
                 )
             )
