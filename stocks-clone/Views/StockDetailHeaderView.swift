@@ -8,7 +8,7 @@
 import UIKit
 
 /// The headerView for StockDetailsVC tableView.
-class StockDetailHeaderView: UIView {
+final class StockDetailHeaderView: UIView {
     
 //    MARK: - Properties
     

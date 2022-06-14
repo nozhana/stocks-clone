@@ -9,7 +9,7 @@ import Charts
 import UIKit
 
 /// View that displays the stock price chart.
-class StockChartView: UIView {
+final class StockChartView: UIView {
     
     /// ViewModel that's used to configure the chart view.
     ///

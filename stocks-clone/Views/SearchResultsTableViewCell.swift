@@ -8,7 +8,7 @@
 import UIKit
 
 /// A `UITableViewCell` for a search result
-class SearchResultsTableViewCell: UITableViewCell {
+final class SearchResultsTableViewCell: UITableViewCell {
     /// SearchResultsTableViewCell reuse identifier
     static let identifier = "SearchResultsTableViewCell"
     

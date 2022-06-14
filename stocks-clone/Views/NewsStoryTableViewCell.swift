@@ -9,7 +9,7 @@ import SDWebImage
 import UIKit
 
 /// A `UITableViewCell` for a news story
-class NewsStoryTableViewCell: UITableViewCell {
+final class NewsStoryTableViewCell: UITableViewCell {
     /// NewsStoryTableViewCell reuse identifier
     static let identifier = "NewsStoryTableViewCell"
     

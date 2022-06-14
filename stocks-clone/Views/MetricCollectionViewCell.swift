@@ -8,7 +8,7 @@
 import UIKit
 
 /// A reusable cell for the collectionView used to represent stock metrics.
-class MetricCollectionViewCell: UICollectionViewCell {
+final class MetricCollectionViewCell: UICollectionViewCell {
 //    MARK: - Properties
     
     /// The ``MetricCollectionViewCell`` reuse identifier.

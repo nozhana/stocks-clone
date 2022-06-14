@@ -14,7 +14,7 @@ protocol WatchlistTableViewCellDelegate: AnyObject {
 /// A cell view that represents a watchlist item.
 ///
 /// **Identifier:** `WatchlistTableViewCell`
-class WatchlistTableViewCell: UITableViewCell {
+final class WatchlistTableViewCell: UITableViewCell {
     
     /// The ``WatchlistTableViewCell`` reuse identifier.
     static let identifier = "WatchlistTableViewCell"

@@ -14,7 +14,7 @@ protocol NewsHeaderViewDelegate: AnyObject {
 }
 
 /// A `UITableViewHeaderFooterView` for the news panel.
-class NewsHeaderView: UITableViewHeaderFooterView {
+final class NewsHeaderView: UITableViewHeaderFooterView {
     /// NewsHeaderView reuse identifier
     static let identifier = "NewsHeaderView"
     /// Preferred height to display in table
