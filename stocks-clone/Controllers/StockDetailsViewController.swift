@@ -96,6 +96,8 @@ class StockDetailsViewController: UIViewController {
     ///
     /// A `UIBarButtonItem` selector listens to this.
     @objc private func didTapCloseButton() {
+        HapticsManager.shared.vibrateForImpact(for: .soft)
+        
         dismiss(animated: true)
     }
     
@@ -275,7 +277,10 @@ extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        HapticsManager.shared.vibrateForSelection()
+        
         guard let url = URL(string: stories[indexPath.row].url) else { return }
+        
         let safariConfig = SFSafariViewController.Configuration()
         safariConfig.entersReaderIfAvailable = true
         let safariVC = SFSafariViewController(url: url, configuration: safariConfig)
@@ -306,8 +311,12 @@ extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource
 extension StockDetailsViewController: NewsHeaderViewDelegate {
     func newsHeaderViewDidTapAddButton(_ headerView: NewsHeaderView) {
         PersistenceManager.shared.addToWatchlist(symbol: symbol, companyName: companyName)
+        
+        HapticsManager.shared.vibrateForNotification(type: .success)
+        
         let alert = UIAlertController(title: "Added to Watchlist", message: "We've added \(companyName) (\(symbol)) to your Watchlist.", preferredStyle: .alert)
         alert.addAction(.init(title: "Okay", style: .cancel))
+        
         present(alert, animated: true)
     }
 }

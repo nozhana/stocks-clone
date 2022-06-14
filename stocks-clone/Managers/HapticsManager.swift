@@ -32,4 +32,12 @@ final class HapticsManager {
         generator.prepare()
         generator.notificationOccurred(type)
     }
+    
+    /// Plays a slight haptic for an impact style.
+    /// - Parameter style: Impact style to vibrate for. either `light`, `medium`, `heavy`, `soft` or `rigid`.
+    public func vibrateForImpact(for style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: style)
+        generator.prepare()
+        generator.impactOccurred()
+    }
 }

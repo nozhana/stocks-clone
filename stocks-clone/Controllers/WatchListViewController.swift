@@ -242,6 +242,8 @@ extension WatchListViewController: SearchResultsViewControllerDelegate {
 //        Hide keyboard after selection
         navigationItem.searchController?.searchBar.resignFirstResponder()
         
+        HapticsManager.shared.vibrateForSelection()
+        
         let detailVC = StockDetailsViewController(
             symbol: result.displaySymbol,
             companyName: result.description
@@ -286,12 +288,16 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            HapticsManager.shared.vibrateForImpact(for: .light)
+            
             tableView.beginUpdates()
             
 //            Update persistence
             PersistenceManager.shared.removeFromWatchlist(symbol: viewModels[indexPath.row].symbol)
+            
 //            Update viewModels
             viewModels.remove(at: indexPath.row)
+            
 //            Delete row
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
@@ -302,6 +308,8 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
 //    Selecting cells
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        HapticsManager.shared.vibrateForSelection()
         
         let viewModel = viewModels[indexPath.row]
         let detailVC = StockDetailsViewController(

@@ -140,6 +140,8 @@ class NewsViewController: UIViewController {
     
     /// Presents an alert that notifies the user that the URL passed in `open(url:)` failed to open.
     private func presentFailedToOpenAlert() {
+        HapticsManager.shared.vibrateForNotification(type: .error)
+        
         let alertVC = UIAlertController(
             title: "Error",
             message: "Failed to open webpage.\nPlease try again.",
@@ -195,11 +197,16 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        HapticsManager.shared.vibrateForSelection()
+        
         let story = stories[indexPath.row]
+        
         guard let url = URL(string: story.url) else {
             presentFailedToOpenAlert()
             return
         }
+        
         open(url: url)
     }
     
