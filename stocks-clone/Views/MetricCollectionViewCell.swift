@@ -7,11 +7,20 @@
 
 import UIKit
 
+/// A reusable cell for the collectionView used to represent stock metrics.
 class MetricCollectionViewCell: UICollectionViewCell {
 //    MARK: - Properties
     
+    /// The ``MetricCollectionViewCell`` reuse identifier.
     static let identifier = "MetricCollectionViewCell"
     
+    /// The ``MetricCollectionViewCell`` ViewModel.
+    ///
+    /// Comprises:
+    /// - `name: String`
+    /// - `value: Double`
+    ///
+    /// - Note: Memberwise initializer rounds the value to 2 fractional digits.
     struct ViewModel {
         internal init(name: String, value: Double) {
             self.name = name
@@ -22,6 +31,7 @@ class MetricCollectionViewCell: UICollectionViewCell {
         let value: String
     }
     
+    /// The label used to represent the title of the cell.
     private let nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.textColor = .label
@@ -30,6 +40,7 @@ class MetricCollectionViewCell: UICollectionViewCell {
         return nameLabel
     }()
     
+    /// The label used to represent the value of the cell.
     private let valueLabel: UILabel = {
         let valueLabel = UILabel()
         valueLabel.textColor = .secondaryLabel
@@ -40,6 +51,10 @@ class MetricCollectionViewCell: UICollectionViewCell {
     
 //    MARK: - Init
     
+    /// Initializes the cell and adds the subviews.
+    ///
+    /// clips the contentView to bounds.
+    /// - Parameter frame: <#frame description#>
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -51,6 +66,7 @@ class MetricCollectionViewCell: UICollectionViewCell {
         fatalError()
     }
     
+    /// Lays out the subviews.
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -74,6 +90,7 @@ class MetricCollectionViewCell: UICollectionViewCell {
         )
     }
     
+    /// Nils out the subviews and prepares the cell for reuse.
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -85,6 +102,8 @@ class MetricCollectionViewCell: UICollectionViewCell {
     
 //    MARK: - Public
     
+    /// Configures the cell with a ``ViewModel``.
+    /// - Parameter viewModel: A ``ViewModel`` containing a `name` and `value`.
     func configure(with viewModel: ViewModel) {
         nameLabel.text = viewModel.name
         valueLabel.text = viewModel.value

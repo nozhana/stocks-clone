@@ -8,14 +8,19 @@
 import UIKit
 import SafariServices
 
+/// View controller that manages the details of a certain stock symbol
 class StockDetailsViewController: UIViewController {
     
 //    MARK: - Properties
     
+    /// The symbol name
     private let symbol: String
+    /// The name of the company e.g. description of the symbol
     private let companyName: String
+    /// Candlestick data representing the stock. Array of ``CandleStick``
     private var candleSticks: [CandleStick]
     
+    /// TableView that displays the chart and metrics in header, and the news in the body.
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(NewsHeaderView.self,
@@ -25,12 +30,19 @@ class StockDetailsViewController: UIViewController {
         return tableView
     }()
     
+    /// Array of ``NewsStory`` for the stock
     private var stories: [NewsStory] = []
     
+    /// Optional var of type ``Metrics`` for stock
     private var metrics: Metrics?
     
 //    MARK: - Init
     
+    /// Initializes StockDetailsVC with a certain stock symbol
+    /// - Parameters:
+    ///   - symbol: symbol i.e. AAPL
+    ///   - companyName: description i.e. Apple Inc.
+    ///   - candleSticks: Array of ``CandleStick`` for the stock
     init(
         symbol: String,
         companyName: String,
@@ -48,6 +60,9 @@ class StockDetailsViewController: UIViewController {
 
 //    MARK: - Lifecycle
     
+    /// Called when the view finishes loading.
+    ///
+    /// Sets up the table and the close button, fetches financial data and news for the stock.
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
@@ -58,6 +73,9 @@ class StockDetailsViewController: UIViewController {
         setupCloseButton()
     }
     
+    /// Called when the view finished laying out subviews.
+    ///
+    /// Used to maximize the tableView frame
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
@@ -65,6 +83,7 @@ class StockDetailsViewController: UIViewController {
 
 //    MARK: - Private
     
+    /// Sets up the close button on navigation bar
     private func setupCloseButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .close,
@@ -73,10 +92,14 @@ class StockDetailsViewController: UIViewController {
         )
     }
     
+    /// Dismisses the view when the close button is tapped.
+    ///
+    /// A `UIBarButtonItem` selector listens to this.
     @objc private func didTapCloseButton() {
         dismiss(animated: true)
     }
     
+    /// Sets up the tableView and adds it as a subview.
     private func setupTable() {
         view.addSubview(tableView)
         tableView.delegate = self
@@ -90,6 +113,12 @@ class StockDetailsViewController: UIViewController {
         tableView.backgroundColor = .clear
     }
     
+    /// Fetches candlesticks and metrics for a certain stock.
+    ///
+    /// Renders the chart after API call finished executing
+    ///
+    /// - Note: Only fetches candlesticks if needed e.g. not already present
+    /// - Note: Calls API in a dispatch group e.g. asynchronously
     private func fetchFinancialData() {
 //        Fetch financial data
         let dispatchGroup = DispatchGroup()
@@ -132,9 +161,8 @@ class StockDetailsViewController: UIViewController {
         }
     }
     
+    /// Renders the chart and collectionview for metrics for a certain stock
     private func renderChart() {
-//        TODO: Show chart
-//        Chart VM | FinancialMetricsViewModel(s)
         let headerView = StockDetailHeaderView(
             frame: CGRect(
                 x: 0,
@@ -191,6 +219,7 @@ class StockDetailsViewController: UIViewController {
         tableView.tableHeaderView = headerView
     }
     
+    /// Fetches the news for a certain stock asynchronously
     private func fetchNews() {
 //        Fetch news
         APIManager.shared.news(for: .companyNews(symbol: symbol)) { [weak self] result in
@@ -206,6 +235,9 @@ class StockDetailsViewController: UIViewController {
         }
     }
     
+    /// Gets the change value for the last candlestick since the prior candlestick.
+    /// - Parameter candleSticks: Candlestick data to parse. Array of ``CandleStick``
+    /// - Returns: Double for change value
     private func getChange(from candleSticks: [CandleStick]) -> Double {
         guard let latestClose = candleSticks.last?.close,
               let priorClose = candleSticks.dropLast().last?.close
@@ -273,7 +305,6 @@ extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource
 // MARK: - NewsHeaderViewDelegate
 extension StockDetailsViewController: NewsHeaderViewDelegate {
     func newsHeaderViewDidTapAddButton(_ headerView: NewsHeaderView) {
-//        TODO: Add to watchlist
         PersistenceManager.shared.addToWatchlist(symbol: symbol, companyName: companyName)
         let alert = UIAlertController(title: "Added to Watchlist", message: "We've added \(companyName) (\(symbol)) to your Watchlist.", preferredStyle: .alert)
         alert.addAction(.init(title: "Okay", style: .cancel))

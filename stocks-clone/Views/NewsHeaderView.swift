@@ -7,27 +7,40 @@
 
 import UIKit
 
+/// The delegate for NewsHeaderView.
+/// Used to manage tapping the "Add to watchlist" button.
 protocol NewsHeaderViewDelegate: AnyObject {
     func newsHeaderViewDidTapAddButton (_ headerView: NewsHeaderView)
 }
 
+/// A `UITableViewHeaderFooterView` for the news panel.
 class NewsHeaderView: UITableViewHeaderFooterView {
+    /// NewsHeaderView reuse identifier
     static let identifier = "NewsHeaderView"
+    /// Preferred height to display in table
     static let preferredHeight: CGFloat = 80
     
+    /// NewsHeaderViewDelegate instance. Optional
     weak var delegate: NewsHeaderViewDelegate?
     
+    /// NewsHeaderView ViewModel.
+    ///
+    /// Contains a `title: String` and `shouldShowAddButton: Bool`
     struct ViewModel {
         let title: String
         let shouldShowAddButton: Bool
     }
     
+    /// Label that displays the title for the news
     private let label: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 23, weight: .black)
         return label
     }()
     
+    /// The "Add to watchlist" button.
+    ///
+    /// Shows only when the stock currently isn't in the user's watchlist
     private let button: UIButton = {
         let button = UIButton()
         button.setTitle("+ Watchlist", for: .normal)
@@ -41,6 +54,8 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     
 //    MARK: - Init
     
+    /// Initializes the NewsHeaderView and adds the label and button as subviews
+    /// - Parameter reuseIdentifier: ``identifier``
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .secondarySystemBackground
@@ -52,6 +67,7 @@ class NewsHeaderView: UITableViewHeaderFooterView {
         fatalError()
     }
     
+    /// Lays out subviews for NewsHeaderView e.g. label and button
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = CGRect(x: 16,
@@ -66,6 +82,7 @@ class NewsHeaderView: UITableViewHeaderFooterView {
                               height: button.h)
     }
     
+    /// Nils out the label and prepares the view for reuse
     override func prepareForReuse() {
         super.prepareForReuse()
         label.text = nil
@@ -73,6 +90,9 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     
 //    MARK: - Private
     
+    /// Called when the user taps the "Add to watchlist" button
+    ///
+    /// The add button action selector listens to this
     @objc private func didTapAddButton() {
 //        Call delegate
         delegate?.newsHeaderViewDidTapAddButton(self)
@@ -81,6 +101,9 @@ class NewsHeaderView: UITableViewHeaderFooterView {
     
 //    MARK: - Public
     
+    /// Configures the NewsHeaderView with its ViewModel
+    /// - Parameter viewModel: ViewModel to configure this view with.
+    /// Contains a `label` and `shouldShowAddButton`
     public func configure(with viewModel: ViewModel) {
         label.text = viewModel.title
         button.isHidden = !viewModel.shouldShowAddButton

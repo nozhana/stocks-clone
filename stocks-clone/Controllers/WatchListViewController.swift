@@ -8,18 +8,27 @@
 import UIKit
 import FloatingPanel
 
+/// The view controller for the main landing page, e.g. the Watchlist.
 class WatchListViewController: UIViewController {
     
+    /// The floating panel that shows top stories and other data.
     private var panelVC: FloatingPanelController?
     
+    /// The timer that manages the timing of API calls when the user searches for a symbol.
     private var searchTimer: Timer?
     
+    /// The maximum width for the right-aligned content in the watchlist TableViewCells.
+    ///
+    /// Handled in ``WatchlistTableViewCell``
     static var maxCellRightContentWidth: CGFloat = 0
     
+    /// A dictionary that maps symbols to their approppriate candlestick data.
     private var watchlistMap: [String: [CandleStick]] = [:]
     
+    /// WatchlistTableViewCell Viewmodels for configuration
     private var viewModels: [WatchlistTableViewCell.ViewModel] = []
     
+    /// The `UITableView` that contains the watchlist data
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(WatchlistTableViewCell.self,
@@ -29,6 +38,7 @@ class WatchListViewController: UIViewController {
 
 //    MARK: - Lifecycle
     
+    /// Called when the view finished loading.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +51,7 @@ class WatchListViewController: UIViewController {
         setupFloatingPanel()
     }
     
+    /// Called when the view finished laying out subviews. Sets the tableView's frame to the view's bounds.
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -49,11 +60,13 @@ class WatchListViewController: UIViewController {
     
 //    MARK: - Private
     
+    /// Sets up the page title
     private func setupTitle() {
         title = "Stocks"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-
+    
+    /// Sets up the search controller and the search results controller
     private func setupSearchController() {
         let resultsVC = SearchResultsViewController()
         resultsVC.delegate = self
@@ -62,12 +75,14 @@ class WatchListViewController: UIViewController {
         navigationItem.searchController = searchVC
     }
     
+    /// Sets up the watchlist table view
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
     }
     
+    /// Fetches the candlestick data for watchlist symbols if needed, and then creates WatchlistTableViewCell viewmodels.
     private func fetchWatchlistData() {
         let symbols = PersistenceManager.shared.watchlistSymbols
         
@@ -97,6 +112,7 @@ class WatchListViewController: UIViewController {
         }
     }
     
+    /// Called in ``fetchWatchlistData()``. Creates WatchlistTableViewCell viewmodels using candlestick data in ``watchlistMap``
     private func createViewModels() {
         var viewModels: [WatchlistTableViewCell.ViewModel] = []
         
@@ -132,6 +148,9 @@ class WatchListViewController: UIViewController {
         self.viewModels = viewModels
     }
     
+    /// Gets the change value from previous candle for last candle
+    /// - Parameter candleSticks: Array of ``CandleStick`` data
+    /// - Returns: Double for change value
     private func getChange(from candleSticks: [CandleStick]) -> Double {
         guard let latestClose = candleSticks.last?.close,
               let priorClose = candleSticks.dropLast().last?.close
@@ -141,6 +160,9 @@ class WatchListViewController: UIViewController {
         return change
     }
     
+    /// Gets the fraction of changed value from previous candle for last candle
+    /// - Parameter candleSticks: Array of ``CandleStick`` data
+    /// - Returns: Double for fraction of change
     private func getChangeFraction(from candleSticks: [CandleStick]) -> Double {
         guard let latestClose = candleSticks.last?.close,
               let priorClose = candleSticks.dropLast().last?.close
@@ -150,6 +172,7 @@ class WatchListViewController: UIViewController {
         return changeFraction
     }
     
+    /// Sets up the floating panel and the ``NewsViewController``
     private func setupFloatingPanel() {
         let newsVC = NewsViewController(type: .topStories)
         panelVC = FloatingPanelController(delegate: self)
@@ -159,6 +182,9 @@ class WatchListViewController: UIViewController {
         panelVC?.addPanel(toParent: self)
     }
     
+    /// Sets up a notification observer for `.didAddToWatchlist`.
+    ///
+    /// The action comprises of removing all cell viewmodels and fetching the watchlist data again.
     private func setupObserver() {
         NotificationCenter.default.addObserver(
             forName: .didAddToWatchlist,
@@ -174,6 +200,8 @@ class WatchListViewController: UIViewController {
 // MARK: - Extensions
 
 extension WatchListViewController: UISearchResultsUpdating {
+    /// Updates search results when the user starts typing
+    /// - Parameter searchController: searchController to update
     func updateSearchResults(for searchController: UISearchController) {
 //        Don't run if search bar is empty or search results are inaccessible
         guard let query = searchController.searchBar.text,
@@ -208,6 +236,8 @@ extension WatchListViewController: UISearchResultsUpdating {
 }
 
 extension WatchListViewController: SearchResultsViewControllerDelegate {
+    /// Called when the user selects a row in search results. Presents a ``StockDetailsViewController``
+    /// - Parameter result: The selected result
     func searchResultsViewControllerDidSelect(result: SearchResult) {
 //        Hide keyboard after selection
         navigationItem.searchController?.searchBar.resignFirstResponder()

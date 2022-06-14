@@ -7,7 +7,16 @@
 
 import Foundation
 
-/// A struct that represents the response decoded from a JSON returned from ``APIManager/candles(for:numberOfDays:completion:)`` API endpoint.
+/// A codable model representing a ``APIManager/candles(for:numberOfDays:completion:)`` API call response.
+///
+/// Comprises:
+/// - `close: [Double]`
+/// - `high: [Double]`
+/// - `low: [Double]`
+/// - `open: [Double]`
+/// - `status: String`
+/// - `timestamp: [TimeInterval]`
+/// - `volume: [Double]`
 struct StockCandles: Codable {
     let close: [Double]
     let high: [Double]
@@ -17,6 +26,7 @@ struct StockCandles: Codable {
     let timestamp: [TimeInterval]
     let volume: [Double]
     
+    /// Coding keys for ``StockCandles``.
     enum CodingKeys: String, CodingKey {
         case close = "c"
         case high = "h"
@@ -27,7 +37,7 @@ struct StockCandles: Codable {
         case volume = "v"
     }
     
-    /// An array of ``CandleStick`` structs for all data in the API response.
+    /// An array of ``CandleStick`` models for all data in a ``StockCandles`` API call response.
     var candleSticks: [CandleStick] {
         var sticks: [CandleStick] = []
         
@@ -52,7 +62,14 @@ struct StockCandles: Codable {
     }
 }
 
-/// An object representing a stock candle, with `date`, `open`, `close`, `high`, `low`.
+/// A model representing a candlestick in ``StockCandles``.
+///
+/// Comprises:
+/// - `date: Date`
+/// - `open: Double`
+/// - `close: Double`
+/// - `high: Double`
+/// - `low: Double`
 struct CandleStick {
     let date: Date
     let open: Double

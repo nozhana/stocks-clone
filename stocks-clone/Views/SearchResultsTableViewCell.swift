@@ -7,9 +7,15 @@
 
 import UIKit
 
+/// A `UITableViewCell` for a search result
 class SearchResultsTableViewCell: UITableViewCell {
+    /// SearchResultsTableViewCell reuse identifier
     static let identifier = "SearchResultsTableViewCell"
-
+    
+    /// Initializes a SearchResultsTableViewCell with a subtitle style
+    /// - Parameters:
+    ///   - style: `CellStyle` is subtitle
+    ///   - reuseIdentifier: ``identifier``
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
     }

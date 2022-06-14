@@ -7,20 +7,26 @@
 
 import UIKit
 
+/// The headerView for StockDetailsVC tableView.
 class StockDetailHeaderView: UIView {
     
 //    MARK: - Properties
-
+    
+    /// An array of ``MetricCollectionViewCell/ViewModel`` for ``MetricCollectionViewCell`` objects.
     private var metricViewModels: [MetricCollectionViewCell.ViewModel] = []
     
+    /// The preferred height for metrics collectionView.
     private let collectionViewHeight: CGFloat = 100
     
 //    Subviews
+    
+    /// An instance of ``StockChartView`` that represents the stock price chart.
     private let chartView: StockChartView = {
         let chartView = StockChartView()
         return chartView
     }()
     
+    /// A `UICollectionView` that encompasses stock metrics.
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -42,6 +48,8 @@ class StockDetailHeaderView: UIView {
     
 //    MARK: - Init
     
+    /// Initializes the headerView and adds subviews.
+    /// - Parameter frame: A `CGRect`.
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -57,6 +65,7 @@ class StockDetailHeaderView: UIView {
         fatalError()
     }
     
+    /// Lays out subviews: frames the chartView and collectionView.
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -66,6 +75,10 @@ class StockDetailHeaderView: UIView {
     
 //    MARK: - Public
     
+    /// Configures the view using chart and metrics viewmodels.
+    /// - Parameters:
+    ///   - chartViewModel: A ``StockChartView`` ``StockChartView/ViewModel``
+    ///   - metricViewModels: A ``MetricCollectionViewCell`` ``MetricCollectionViewCell/ViewModel``
     public func configure(
         chartViewModel: StockChartView.ViewModel,
         metricViewModels: [MetricCollectionViewCell.ViewModel]

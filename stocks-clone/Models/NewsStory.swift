@@ -7,6 +7,18 @@
 
 import Foundation
 
+/// A codable model representing a ``APIManager/news(for:completion:)`` API call response.
+///
+/// Comprises:
+/// - `category: String`
+/// - `datetime: TimeInterval` (UNIX time)
+/// - `headline: String`
+/// - `id: Int`
+/// - `image: String` (URL string)
+/// - `related: String`
+/// - `source: String`
+/// - `summary: String`
+/// - `url: String`
 struct NewsStory: Codable {
     let category: String
     let datetime: TimeInterval

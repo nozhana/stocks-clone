@@ -120,6 +120,10 @@ final class APIManager {
         }
     }
     
+    /// Makes a request to `basicFinancials` endpoint for a given symbol.
+    /// - Parameters:
+    ///   - symbol: Symbol for getting financials
+    ///   - completion: Closure of `Result` that holds a ``FinancialMetricsResponse`` upon success and `Error` upon failure.
     public func financialMetrics(
         for symbol: String,
         completion: @escaping (Result<FinancialMetricsResponse, Error>) -> Void
@@ -148,6 +152,7 @@ final class APIManager {
     ///  - `marketNews`
     ///  - `companyNews`
     ///  - `stockCandles`
+    ///  - `basicFinancials`
     private enum Endpoint: String {
         case search
         case marketNews = "news"
@@ -203,9 +208,9 @@ final class APIManager {
     /// Returns nothing.
     /// - Parameters:
     ///   - url: A `URL` optional for request
-    ///   - expecting: Will hold expected value after decoded by `JSONDecoder().decode`
-    ///   - completion: Closure that takes `Result` of `.success` or `.failure`
-    ///   with appropriately decoded result or an error as parameter. Returns nothing
+    ///   - expecting: Will hold expected value after decoding response JSON
+    ///   - completion: Closure that holds `Result` of `.success` or `.failure`
+    ///   with appropriately decoded result or an error as parameter.
     private func request<T: Codable>(
         url: URL?,
         expecting: T.Type,

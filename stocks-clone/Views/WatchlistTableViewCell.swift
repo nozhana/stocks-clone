@@ -71,6 +71,7 @@ class WatchlistTableViewCell: UITableViewCell {
         fatalError()
     }
     
+    /// Lays out subviews.
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -84,11 +85,22 @@ class WatchlistTableViewCell: UITableViewCell {
         changePercentageLabel.textAlignment = .right
         changeLabel.textAlignment = .right
         
+        /// The vertical distance between content elements
         let verticalDistance: CGFloat = 4
+        
+        /// The horizontal distance between content elements
         let horizontalDistance: CGFloat = 8
+        
+        /// The distance from the content's right to the frame's right
         let rightMargin: CGFloat = 16
+        
+        /// The distance from the content's top to the frame's top
         let topMargin: CGFloat = 8
+        
+        /// Min y for left-aligned content within the cell
         let leftContentTop: CGFloat = (contentView.h - symbolLabel.h - companyLabel.h - verticalDistance) / 2
+        
+        /// Min y for right-aligned content within the cell
         let rightContentTop: CGFloat = (contentView.h - priceLabel.h - changePercentageLabel.h - changeLabel.h - verticalDistance) / 2
         
         symbolLabel.frame = .init(
@@ -105,11 +117,14 @@ class WatchlistTableViewCell: UITableViewCell {
             height: companyLabel.h
         )
         
+        /// Max width of right-aligned content among all cells up to the current cell
         let currentRightContentWidth = max(
             max(priceLabel.w, changePercentageLabel.w),
             WatchListViewController.maxCellRightContentWidth
         )
         
+        // Assigns the maxCellRightContentWidth to currentRightContentWidth
+        // if the current width is larger
         if currentRightContentWidth > WatchListViewController.maxCellRightContentWidth {
             WatchListViewController.maxCellRightContentWidth = currentRightContentWidth
             delegate?.didSetMaxCellRightContentWidth()
@@ -144,7 +159,7 @@ class WatchlistTableViewCell: UITableViewCell {
         )
     }
     
-    /// Deconstruct all subviews accordingly.
+    /// Deconstructs all subviews accordingly and prepares the view for reuse.
     override func prepareForReuse() {
         super.prepareForReuse()
         symbolLabel.text = nil
@@ -182,6 +197,7 @@ class WatchlistTableViewCell: UITableViewCell {
         return label
     }()
     
+    /// The label that represents the percentage of changed value for the stock since prior candle
     private let changePercentageLabel: UILabel = {
         let label = PaddingLabel(top: 2, left: 4, bottom: 2, right: 4)
         label.font = .monospacedDigitSystemFont(ofSize: 15, weight: .bold)
@@ -191,7 +207,7 @@ class WatchlistTableViewCell: UITableViewCell {
         return label
     }()
     
-    /// The label that represents the changed value of the stock since last closing price.
+    /// The label that represents the changed value for the stock since last closing price.
     private let changeLabel: UILabel = {
         let label = UILabel()
         label.font = .monospacedDigitSystemFont(ofSize: 13, weight: .medium)
@@ -211,8 +227,6 @@ class WatchlistTableViewCell: UITableViewCell {
     
     /// Configures the cell subviews with given ViewModel.
     /// - Parameter viewModel: A ``ViewModel`` that holds information related to a specific stock to populate the cell.
-    ///
-    /// **TODO:** Configure minichart.
     public func configure(with viewModel: ViewModel) {
         symbolLabel.text = viewModel.symbol
         companyLabel.text = viewModel.companyName
@@ -220,8 +234,6 @@ class WatchlistTableViewCell: UITableViewCell {
         changePercentageLabel.text = viewModel.changePercentage
         changePercentageLabel.backgroundColor = viewModel.changeColor
         changeLabel.text = viewModel.change
-//        TODO: Configure chart
         miniChartView.configure(with: viewModel.chartViewModel)
     }
-    
 }
