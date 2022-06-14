@@ -10,18 +10,26 @@ import UIKit
 
 /// An object that manages the haptics throughout the application.
 final class HapticsManager {
-    /// Singleton of `HapticsManager`
-    static let shared = HapticsManager ()
+    /// Singleton of ``HapticsManager``
+    static let shared = HapticsManager()
     
     /// The default implementation of this initializer does nothing.
     private init() {}
     
 //    MARK: - Public
     
-    /// Plays a haptic when the user selects an item. **TODO**
-    public func vibrateForSelection () {
-//        TODO: Vibrate lightly for a selection tap interaction
+    /// Plays a slight haptic when the user selects an item.
+    public func vibrateForSelection() {
+        let generator = UISelectionFeedbackGenerator()
+        generator.prepare()
+        generator.selectionChanged()
     }
     
-//    TODO: Vibrate for typing
+    /// Plays a slight haptic for a given notification type.
+    /// - Parameter type: type to vibrate for. either `success`, `warning`, or `error`.
+    public func vibrateForNotification(type: UINotificationFeedbackGenerator.FeedbackType) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(type)
+    }
 }
