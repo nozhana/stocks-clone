@@ -70,7 +70,7 @@ struct StockCandles: Codable {
 /// - `close: Double`
 /// - `high: Double`
 /// - `low: Double`
-struct CandleStick {
+struct CandleStick: Equatable {
     let date: Date
     let open: Double
     let close: Double

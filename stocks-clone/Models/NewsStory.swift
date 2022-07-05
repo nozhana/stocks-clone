@@ -19,7 +19,7 @@ import Foundation
 /// - `source: String`
 /// - `summary: String`
 /// - `url: String`
-struct NewsStory: Codable {
+struct NewsStory: Codable, Equatable {
     let category: String
     let datetime: TimeInterval
     let headline: String
